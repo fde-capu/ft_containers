@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 12:52:21 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/13 17:13:18 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/13 17:20:06 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ unsigned char random_char();
 # define _MAP_ _MAP_A_ + _MAP_B_ + _MAP_C_ + _MAP_D_ + _MAP_E_
 # define _ALL_ _FT_ + _PAIR_ + _IS_INTEGRAL_ + _ENABLE_IF_ + _ITERATOR_ + _VECTOR_ + _STACK_ + _MAP_ + _SET_ + _EQ_LEXICO_
 # define _SIMPLE_ _FT_ + _GENERAL_
+# define _EXTRAS_ _FT_ + _PAIR_ + _IS_INTEGRAL_ + _ENABLE_IF_ + _ITERATOR_ + _EQ_LEXICO_
+# define _VECSTACK_ _VECTOR_ + _STACK_
 
 # ifndef SECTION
 #  define SECTION _SIMPLE_
