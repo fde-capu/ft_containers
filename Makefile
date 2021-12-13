@@ -6,7 +6,7 @@
 #    By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/08 11:41:00 by fde-capu          #+#    #+#              #
-#    Updated: 2021/12/13 12:29:08 by fde-capu         ###   ########.fr        #
+#    Updated: 2021/12/13 17:12:18 by fde-capu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,9 +29,9 @@ HEAD	=	Makefile \
 			unit/check_stack.h unit/check_map.h \
 			unit/check_set.h unit/check_eq_lexico.h
 SHELL	=	/bin/sh
-CHECK	=	'_SIMPLE_'
-CC98	=	clang++ -std=c++98 -DSECTION=$(CHECK)
-CC11	=	clang++ -DSECTION=$(CHECK)
+check	=	'_SIMPLE_'
+CC98	=	clang++ -std=c++98 -DSECTION=$(check)
+CC11	=	clang++ -DSECTION=$(check)
 CC		=	$(LINE) $(CC98)
 CCSTL	=	$(LINE) $(CC11)
 CCFLAGS	=	-Wall -Werror -Wextra -g

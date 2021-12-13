@@ -18,7 +18,7 @@ _MAP_D_
 _MAP_E_
 _SET_
 _GENERAL_
-_SIMPLE_ (= _FT_ + _GENERAL_)
+_SIMPLE_ (= _FT_ + _GENERAL_) <- default
 
 * When changing the option between trials, make fclean is needed. *
 
