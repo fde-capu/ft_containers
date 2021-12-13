@@ -6,28 +6,39 @@
 #    By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/08 11:41:00 by fde-capu          #+#    #+#              #
-#    Updated: 2021/12/13 17:12:18 by fde-capu         ###   ########.fr        #
+#    Updated: 2021/12/13 17:39:07 by fde-capu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	ft_containers
 NAMESTL	=	stl_containers
 SEED	=	42
-SRCS	=	unit/unit_main.cpp unit/Chronometer.cpp unit/ft_main.cpp \
-			src/ft_tree.cpp main.cpp
+
+SRCS	=	\
+			src/ft_tree.cpp main.cpp \
+			unit/unit_main.cpp \
+			unit/Chronometer.cpp unit/ft_main.cpp
+
 HEAD	=	Makefile \
-			unit/unit_main.h unit/Chronometer.hpp \
-			stack.hpp vector.hpp \
-			bits/ft_pair.h bits/ft_tree.h bits/ft_iterator_base_types.h \
-			bits/type_traits.h bits/ft_utility.h bits/ft_iterator_base_funcs.h \
-			bits/ft_iterator.h bits/ft_algobase.h \
+			stack.hpp \
+			vector.hpp \
 			map.hpp \
 			set.hpp \
+			bits/ft_pair.h \
+			bits/ft_tree.h \
+			bits/ft_iterator_base_types.h \
+			bits/type_traits.h \
+			bits/ft_utility.h \
+			bits/ft_iterator_base_funcs.h \
+			bits/ft_iterator.h \
+			bits/ft_algobase.h \
 			unit/check_vector.h unit/check_iterator.h \
 			unit/check_pair.h unit/check_is_integral.h \
 			unit/check_enable_if.h unit/check_helpers.h \
 			unit/check_stack.h unit/check_map.h \
-			unit/check_set.h unit/check_eq_lexico.h
+			unit/check_set.h unit/check_eq_lexico.h \
+			unit/unit_main.h unit/Chronometer.hpp
+
 SHELL	=	/bin/sh
 check	=	'_SIMPLE_'
 CC98	=	clang++ -std=c++98 -DSECTION=$(check)
@@ -43,7 +54,7 @@ VALFLAG	=	--tool=memcheck \
 			--show-leak-kinds=all \
 			--track-origins=yes \
 			--show-reachable=yes
-DIFFWID =	100
+DIFFWID =	200
 LINE	=	@echo "\n\n***************************************************\n\n";
 
 all:		$(NAME) $(NAMESTL)

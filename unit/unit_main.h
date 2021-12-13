@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 12:52:21 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/13 17:20:06 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/13 17:38:52 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 
 # include "Chronometer.hpp"
 
-# define UNIT_COLUMNS 6
+# define UNIT_COLUMNS 12
 # define NOT_EQUAL false
 
 static size_t g_test_ok;
