@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tree.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: iwillens <iwillens@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:38:47 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/13 02:45:48 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/13 18:08:45 by iwillens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -326,16 +326,16 @@ namespace ft
 
 				tree_ref copy_full(tree_ref dst, c_tree_ref ori)
 				{
-					if (dst == &ori)
-						return *dst;
+					if (dst == ori)
+						return dst;
 					clear();
-					dst->root.color = red;
+					dst.root.color = red;
 					key_compare = ori.key_compare;
-					root_node_ref() = copy(ori.tree_begin(), dst->tree_end());
-					leftmost() = leftmost_child(root_node_ptr());
-					rightmost() = rightmost_child(root_node_ptr());
+					root_node_ref() = copy(ori.tree_begin(), dst.tree_end());
+					leftmost() = const_cast<ft::_node *>(leftmost_child(root_node_ptr()));
+					rightmost() =  const_cast<ft::_node *>(rightmost_child(root_node_ptr()));
 					node_count = ori.node_count;
-					return *dst;
+					return dst;
 				}
 
 			public:
@@ -363,7 +363,7 @@ namespace ft
 				~_tree() { clear(); }
 
 				tree_ref operator= (c_tree_ref x)
-				{ return copy_full(this, x); }
+				{ return copy_full(*this, x); }
 
 				comp key_comp() const
 				{ return key_compare; }

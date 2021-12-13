@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_algobase.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: iwillens <iwillens@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:37:37 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/09 12:54:07 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/13 18:00:43 by iwillens         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,24 @@
 
 namespace ft
 {
+
+	template <class InputIt1, class InputIt2, class Compare>
+	bool lexicographical_compare (InputIt1 first1, InputIt1 last1,
+		InputIt2 first2, InputIt2 last2, Compare comp)
+	{
+		while ((first1 != last1) && (first2 != last2))
+		{
+			if (comp(*first1, *first2))
+				return (true);
+			else if (comp(*first2, *first1))
+				return(false);
+			first1++;
+			first2++;
+		}
+		return ((first1 == last1) && (first2 != last2));
+	}
+
+
 	template<typename I1, typename I2>
 		bool lexicographical_compare
 		(I1 a_s, I1 a_e, I2 b_s, I2 b_e)
