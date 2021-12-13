@@ -1,0 +1,102 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/12/08 11:41:00 by fde-capu          #+#    #+#              #
+#    Updated: 2021/12/13 12:29:08 by fde-capu         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+NAME	=	ft_containers
+NAMESTL	=	stl_containers
+SEED	=	42
+SRCS	=	unit/unit_main.cpp unit/Chronometer.cpp unit/ft_main.cpp \
+			src/ft_tree.cpp main.cpp
+HEAD	=	Makefile \
+			unit/unit_main.h unit/Chronometer.hpp \
+			stack.hpp vector.hpp \
+			bits/ft_pair.h bits/ft_tree.h bits/ft_iterator_base_types.h \
+			bits/type_traits.h bits/ft_utility.h bits/ft_iterator_base_funcs.h \
+			bits/ft_iterator.h bits/ft_algobase.h \
+			map.hpp \
+			set.hpp \
+			unit/check_vector.h unit/check_iterator.h \
+			unit/check_pair.h unit/check_is_integral.h \
+			unit/check_enable_if.h unit/check_helpers.h \
+			unit/check_stack.h unit/check_map.h \
+			unit/check_set.h unit/check_eq_lexico.h
+SHELL	=	/bin/sh
+CHECK	=	'_SIMPLE_'
+CC98	=	clang++ -std=c++98 -DSECTION=$(CHECK)
+CC11	=	clang++ -DSECTION=$(CHECK)
+CC		=	$(LINE) $(CC98)
+CCSTL	=	$(LINE) $(CC11)
+CCFLAGS	=	-Wall -Werror -Wextra -g
+OBJS	=	$(SRCS:.cpp=.o)
+OBJSSTL	=	$(SRCS:.cpp=.o_stl)
+VAL		=	valgrind
+VALFLAG	=	--tool=memcheck \
+			--leak-check=full \
+			--show-leak-kinds=all \
+			--track-origins=yes \
+			--show-reachable=yes
+DIFFWID =	100
+LINE	=	@echo "\n\n***************************************************\n\n";
+
+all:		$(NAME) $(NAMESTL)
+
+ft:			$(NAME)
+$(NAME):	$(OBJS)
+	$(CC) $(CCFLAGS) $(OBJS) -o $(NAME)
+$(OBJS):	%.o : %.cpp $(HEAD)
+	$(CC) $(CCFLAGS) -o $@ -c $<
+
+stl:		$(NAMESTL)
+$(NAMESTL):	$(OBJSSTL)
+	$(CCSTL) $(CCFLAGS) -DSTL=1 $(OBJSSTL) -o $(NAMESTL)
+$(OBJSSTL):	%.o_stl : %.cpp $(HEAD)
+	$(CCSTL) $(CCFLAGS) -DSTL=1 -o $@ -c $<
+
+clean:
+	-rm -f $(OBJS)
+	-rm -f $(OBJSSTL)
+	-rm -f timings_*
+	-rm -f *.o
+fclean:		clean
+	-rm -f $(NAME)
+	-rm -f $(NAMESTL)
+re:			fclean all
+
+ftt:		ft
+	@echo "\n::::::";
+	@echo "::::::::::::: FT";
+	@echo ":::::::::::::::::::::::::::::::::::::::::::";
+	./$(NAME) $(SEED)
+ftv:		ft
+	$(VAL) ./$(NAME) $(SEED)
+ftvf:		ft
+	$(VAL) $(VALFLAG) ./$(NAME) $(SEED)
+
+stlt:		stl
+	@echo "\n::::::";
+	@echo "::::::::::::: STL";
+	@echo ":::::::::::::::::::::::::::::::::::::::::::";
+	./$(NAMESTL) $(SEED)
+stlv:		stl
+	$(VAL) ./$(NAMESTL) $(SEED)
+stlvf:		stl
+	$(VAL) $(VALFLAG) ./$(NAMESTL) $(SEED)
+
+t:			stl ft stlt ftt
+rt:			re t
+
+diff:		all
+	@-rm -f timings_*
+	@./$(NAMESTL) $(SEED) >> timings_stl.txt
+	@./$(NAME) $(SEED) >> timings_ft.txt
+	@-diff -y --suppress-common-lines -W $(DIFFWID) timings_stl.txt timings_ft.txt
+	@echo "(diff is supposed to return error in case of difference)";
+d:			diff
