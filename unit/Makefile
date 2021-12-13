@@ -6,9 +6,12 @@
 #    By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/08 12:00:02 by fde-capu          #+#    #+#              #
-#    Updated: 2021/12/08 12:54:34 by fde-capu         ###   ########.fr        #
+#    Updated: 2021/12/13 17:44:01 by fde-capu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+# This file is not being used on the project, but was kept in an attempt to
+# have a stand-alone tester.
 
 USER_OUT = ft_containers
 USER_STL = stl_containers

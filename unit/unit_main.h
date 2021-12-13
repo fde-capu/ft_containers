@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 12:52:21 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/13 17:38:52 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/13 17:42:06 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,19 +79,5 @@ unsigned char random_char();
 # ifndef SECTION
 #  define SECTION _SIMPLE_
 # endif
-
-//# define SECTION _PAIR_
-//# define SECTION _FT_
-//# define SECTION _IS_INTEGRAL_
-//# define SECTION _ENABLE_IF_
-//# define SECTION _ITERATOR_
-//# define SECTION _EQ_LEXICO_
-
-//# define SECTION _VECTOR_
-//# define SECTION _STACK_
-
-//# define SECTION _SET_
-
-//# define SECTION _MAP_
 
 #endif
