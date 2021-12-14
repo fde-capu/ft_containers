@@ -6,7 +6,7 @@
 /*   By: iwillens <iwillens@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:53:23 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/14 13:32:33 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/14 10:51:11 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,6 @@ namespace ft
 				vector(_const_vector_ref x)
 				: _base(x.size())
 				{ this->_m_finish = _copy(x.begin(), x.end(), this->_m_start); }
-//				{ this->_m_finish = _copy(x.begin(), x.end(), this->_m_start); }
 
 				~vector() {}
 
@@ -142,7 +141,8 @@ namespace ft
 				{
 					if (this == &rhs)
 						return *this;
-					this->_m_free();
+					if (!empty())
+						this->_m_free();
 					this->_m_start = this->_m_allocate(rhs.size());
 					this->_m_finish = _copy(rhs.begin(), rhs.end(), this->_m_start);
 					this->_m_end_of_storage = this->_m_start + rhs.size();
