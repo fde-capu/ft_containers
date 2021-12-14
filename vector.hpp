@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwillens <iwillens@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/08 11:53:23 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/14 17:03:01 by fde-capu         ###   ########.fr       */
+/*   Created: 2021/12/14 23:05:51 by fde-capu          #+#    #+#             */
+/*   Updated: 2021/12/14 23:05:52 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,11 @@ namespace ft
 				}
 
 				template<typename X, typename Y>
-					X _copy(Y o_s, Y o_e, X pos)
+					X _copy(Y o_h, Y o_e, X& pos)
 					{
 						X p = pos;
-						while (o_s != o_e)
-							*p++ = *o_s++;
+						while (o_h != o_e)
+							*(p++) = *(o_h++);
 						return p;
 					}
 
@@ -252,14 +252,14 @@ namespace ft
 				template<typename In>
 					typename ft::enable_if< \
 						!ft::is_integral<In>::value, void>::type
-					assign(In origin_first, In origin_last)
+					assign(In o_s, In o_e)
 					{
 						this->_m_free();
 						size_t new_cap =
-							static_cast<size_t>(ft::distance(origin_first, origin_last)) > static_cast<size_t>(capacity()) ?
-							ft::distance(origin_first, origin_last) : capacity();
+							static_cast<size_t>(ft::distance(o_s, o_e)) > static_cast<size_t>(capacity()) ?
+							ft::distance(o_s, o_e) : capacity();
 						this->_m_start = this->_m_allocate(new_cap);
-						this->_m_finish = _copy(origin_first, origin_last, this->_m_start);
+						this->_m_finish = _copy(o_s, o_e, this->_m_start);
 						this->_m_end_of_storage = this->_m_start + new_cap;
 					}
 
@@ -270,9 +270,7 @@ namespace ft
 				}
 
 				void pop_back()
-				{
-					--this->_m_finish;
-				}
+				{ --this->_m_finish; }
 
 				iterator insert(iterator pos, const value_type& x)
 				{
