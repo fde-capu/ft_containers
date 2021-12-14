@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:38:47 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/13 02:45:48 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/14 11:16:26 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ namespace ft
 
 			_tree_iterator(c_tree_ptr x) : node(const_cast<tree_ptr>(x)) {}
 
-			_tree_iterator(const iterator& it) : node(it.node) {}
+//			_tree_iterator(const iterator& it) : node(it.node) {}
 
 			reference operator* () const
 			{ return static_cast<tree_ptr>(node)->value; }

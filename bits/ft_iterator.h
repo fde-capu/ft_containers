@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:38:36 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/12 11:50:10 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/14 11:14:51 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,9 +155,10 @@ namespace ft // Originaly in namespace __gnu_cxx, used by vector.
 
 			explicit reverse_iterator(T rhs) : _pointer(rhs) {}
 
-			reverse_iterator(const reverse_iterator& rhs)
-			: _pointer(rhs._pointer) {}
-
+//			Copy constructor deprecated; it has user-defined assignment constructor.
+/*			reverse_iterator(const reverse_iterator& rhs)
+**			: _pointer(rhs._pointer) {}
+*/
 			template<typename Ci>
 				reverse_iterator(const reverse_iterator<Ci>& rhs)
 				: _pointer(rhs.base()) {}
