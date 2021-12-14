@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:57:18 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/09 15:43:30 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/14 11:15:46 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,6 +305,7 @@ void check_iterator()
 		check(9, 1, 1);
 		static_cast<void>(it_a);
 		static_cast<void>(it_b);
+		static_cast<void>(it_d);
 	}
 	{
 		typename ft::vector<T>::iterator it_a;

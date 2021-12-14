@@ -6,13 +6,14 @@
 #    By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/08 11:41:00 by fde-capu          #+#    #+#              #
-#    Updated: 2021/12/14 06:53:52 by fde-capu         ###   ########.fr        #
+#    Updated: 2021/12/14 08:16:23 by fde-capu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	ft_containers
 NAMESTL	=	stl_containers
 SEED	=	42
+check	=	'_EQ_LEXICO_'
 
 SRCS	=	\
 			src/ft_tree.cpp main.cpp \
@@ -40,12 +41,9 @@ HEAD	=	Makefile \
 			unit/unit_main.h unit/Chronometer.hpp
 
 SHELL	=	/bin/sh
-check	=	'_SIMPLE_'
-CC98	=	clang++ -std=c++98 -DSECTION=$(check)
-CC11	=	clang++ -DSECTION=$(check)
-CC		=	$(LINE) $(CC98)
-CCSTL	=	$(LINE) $(CC11)
 CCFLAGS	=	-Wall -Werror -Wextra -g
+CC98	=	clang++ $(CCFLAGS) -std=c++98 -DSECTION=$(check)
+CC11	=	clang++ $(CCFLAGS) -DSECTION=$(check)
 OBJS	=	$(SRCS:.cpp=.o)
 OBJSSTL	=	$(SRCS:.cpp=.o_stl)
 VAL		=	valgrind
@@ -61,15 +59,19 @@ all:		$(NAME) $(NAMESTL)
 
 ft:			$(NAME)
 $(NAME):	$(OBJS)
-	$(CC) $(CCFLAGS) $(OBJS) -o $(NAME)
+	$(LINE)
+	$(CC98) $(OBJS) -o $(NAME)
 $(OBJS):	%.o : %.cpp $(HEAD)
-	$(CC) $(CCFLAGS) -o $@ -c $<
+	$(LINE)
+	$(CC98) -o $@ -c $<
 
 stl:		$(NAMESTL)
 $(NAMESTL):	$(OBJSSTL)
-	$(CCSTL) $(CCFLAGS) -DSTL=1 $(OBJSSTL) -o $(NAMESTL)
+	$(LINE)
+	$(CC11) $(OBJSSTL) -o $(NAMESTL)
 $(OBJSSTL):	%.o_stl : %.cpp $(HEAD)
-	$(CCSTL) $(CCFLAGS) -DSTL=1 -o $@ -c $<
+	$(LINE)
+	$(CC11) -o $@ -c $<
 
 clean:
 	-rm -f $(OBJS)
