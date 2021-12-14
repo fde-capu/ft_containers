@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_modifiers.hpp                               :+:      :+:    :+:   */
+/*   map_modifiers.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwillens <iwillens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 13:24:37 by iwillens          #+#    #+#             */
-/*   Updated: 2021/10/02 13:53:05 by iwillens         ###   ########.fr       */
+/*   Updated: 2021/12/14 17:11:44 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ std::string map_insert4()
 	tmp.insert(typename T::value_type(1, 100));
 	tmp.insert(typename T::value_type(5, 500));
 	tmp.insert(typename T::value_type(10, 1000));	
-	s += "Insert Repeated: " + ft::to_string(tmp.insert(typename T::value_type(1, 100)).second);
-	s += "Insert Repeated: " + ft::to_string(tmp.insert(typename T::value_type(5, 500)).second);
-	s += "Insert Repeated: " + ft::to_string(tmp.insert(typename T::value_type(10, 1000)).second);
+	s += "| Insert Repeated (a): " + ft::to_string(tmp.insert(typename T::value_type(1, 100)).second);
+	s += "| Insert Repeated (b): " + ft::to_string(tmp.insert(typename T::value_type(5, 500)).second);
+	s += "| Insert Repeated (c): " + ft::to_string(tmp.insert(typename T::value_type(10, 1000)).second);
 	s += map_attributes<T>(v);
 	return (ft::Tester::Return(s));
 }

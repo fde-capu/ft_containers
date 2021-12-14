@@ -6,7 +6,7 @@
 /*   By: iwillens <iwillens@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:38:47 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/14 15:02:26 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/14 17:51:22 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -445,10 +445,11 @@ namespace ft
 					tree_ptr pos = pos_and_piv.first;
 					tree_ptr piv = pos_and_piv.second;
 					iterator piv_it = static_cast<iterator>(piv);
+					if (!empty() && KoV(v) == key(piv))
+						return ft::pair<iterator, bool>(piv_it, false); // repeated!
 					if (piv_it == begin()) // left!
 						return ft::pair<iterator, bool>(insert(pos, piv, v), true);
-					bool dir = key_compare(KoV(v), key(piv));
-					if (dir)
+					if (key_compare(KoV(v), key(piv)))
 						--piv_it;
 					if (key_compare(key(piv_it.node), KoV(v)))
 						return ft::pair<iterator, bool>(insert(pos, piv, v), true);
@@ -499,19 +500,21 @@ namespace ft
 					tree foo;
 					iterator s = static_cast<iterator>(begin());
 					iterator e = static_cast<iterator>(end());
+					if (s == first && e == last)
+						return clear();
 					bool do_not = false;
 					while (s != e)
 					{
+						if (s == first)
+						{
+							do_not = true;
+							s++;
+							continue ;
+						}
 						if (s == last)
 							do_not = false;
 						if (do_not)
 						{
-							s++;
-							continue ;
-						}
-						if (s == first)
-						{
-							do_not = true;
 							s++;
 							continue ;
 						}

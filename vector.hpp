@@ -6,7 +6,7 @@
 /*   By: iwillens <iwillens@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:53:23 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/14 14:54:33 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/14 17:03:01 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,38 +51,48 @@ namespace ft
 				{
 					if (!bypass_check && !need_expansion(size_to_fit))
 						return ;
-					size_type new_size = this->size();
+					size_type new_size = size();
 					new_size = new_size ? new_size : 1;
 					while (new_size < size_to_fit)
 						new_size *= 2;
-					this->reserve(new_size);
+					reserve(new_size);
 				}
 
 				bool	need_expansion(size_type size_to_fit)
-				{ return size_to_fit > this->capacity(); }
+				{ return size_to_fit > capacity(); }
 
-				void	expand_update(size_type size_to_fit, iterator& position)
+				void	expand_update(size_type size_to_fit, iterator& pos)
 				{
 					if (need_expansion(size_to_fit))
 					{
-						size_type new_pos = ft::distance(this->begin(), position);
-						this->expand(size_to_fit, true);
-						position = this->begin() + new_pos;
+						size_type new_pos = ft::distance(begin(), pos);
+						expand(size_to_fit, true);
+						pos = begin() + new_pos;
 					}
 				}
 
-				void	splitopen_for_insert(iterator position, size_type n)
+				void	expand_raw(size_type size_raw, iterator& pos)
+				{
+					if (need_expansion(size_raw))
+					{
+						size_type new_pos = ft::distance(begin(), pos);
+						reserve(size_raw);
+						pos = begin() + new_pos;
+					}
+				}
+
+				void	splitopen_for_insert(iterator pos, size_type n)
 				{
 					size_type gap = n;
-					n += ft::distance(position + n, end());
+					n += ft::distance(pos + n, end());
 					while (n--)
-						*(position + gap + n) = *(position + n);
+						*(pos + gap + n) = *(pos + n);
 					this->_m_finish += gap;
 				}
 
 				void _m_range_check(size_type n) const
 				{
-					if (n < this->size())
+					if (n < size())
 						return ;
 					std::stringstream ss;
 					ss << "What index would you please? " << n << ", really?";
@@ -176,7 +186,8 @@ namespace ft
 					else
 					{
 						size_t complement = new_size - size();
-						expand(new_size);
+						// expand(new_size); // clang++ v.13
+						this->reserve(new_size); // clang++ v.12 (42 Workspaces)
 						this->_m_finish = _fill_n( \
 							this->_m_finish, complement, x);
 					}
@@ -254,7 +265,7 @@ namespace ft
 
 				void push_back(const value_type& x)
 				{
-					this->expand(this->size() + 1);
+					expand(size() + 1);
 					*(this->_m_finish++) = x;
 				}
 
@@ -263,28 +274,31 @@ namespace ft
 					--this->_m_finish;
 				}
 
-				iterator insert(iterator position, const value_type& x)
+				iterator insert(iterator pos, const value_type& x)
 				{
-					size_type new_pos = ft::distance(this->begin(), position);
-					insert(position, 1, x);
-					return this->begin() + new_pos;
+					size_type new_pos = ft::distance(begin(), pos);
+					insert(pos, 1, x);
+					return begin() + new_pos;
 				}
 
-				void insert(iterator position, size_type n, const value_type& x)
+				void insert(iterator pos, size_type n, const value_type& x)
 				{
-					this->expand_update(this->size() + n, position);
-					this->splitopen_for_insert(position, n);
-					_fill_n(position.base(), n, x);
+					if (n == 1)
+						expand_update(size() + n, pos);
+					else
+						expand_raw(size() + n, pos);
+					splitopen_for_insert(pos, n);
+					_fill_n(pos.base(), n, x);
 				}
 
 				template<typename In>
 					typename ft::enable_if<!ft::is_integral<In>::value, void>::type
-					insert(iterator position, In origin_first, In origin_last)
+					insert(iterator pos, In o_s, In o_e)
 					{
-						size_type n = ft::distance(origin_first, origin_last);
-						this->expand_update(this->size() + n, position);
-						this->splitopen_for_insert(position, n);
-						_copy(origin_first, origin_last, position);
+						size_type n = ft::distance(o_s, o_e);
+							expand_raw(n + size(), pos);
+						splitopen_for_insert(pos, n);
+						_copy(o_s, o_e, pos);
 					}
 
 				iterator erase(iterator first)
