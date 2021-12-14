@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:56:40 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/09 13:38:08 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/14 12:11:05 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,12 @@ bool range_ten(const T& a, const T& b)
 	if (a >= b)
 		return a - b <= T(10);
 	return b - a <= T(10);
+}
+
+	template<typename P>
+bool v_is_same(P a, P b)
+{
+	return a.second == b.second;
 }
 
 #endif

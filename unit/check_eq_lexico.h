@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 16:43:13 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/09 13:36:15 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/14 12:13:01 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,88 @@ void check_eq_lexico()
 		check(13, ft::lexicographical_compare(
 			ma.begin(), ma.end(), mb.begin(), mb.end()
 		), false);
+	}
+
+	title("lc bool pred.");
+	{
+		ft::map<K, V> ma;
+		ma[K(7)] = V(1);
+		ma[K(9)] = V(11);
+		ma[K(3)] = V(1);
+		ma[K(13)] = V(21);
+
+		check(1, ft::lexicographical_compare(
+					ma.begin(), ma.begin(), ma.begin(), ma.begin(), v_is_same<ft::pair<const K, V> >
+					), false);
+
+		check(2, ft::lexicographical_compare(
+					ma.begin(), ++ma.begin(), ma.begin(), ++ma.begin(), v_is_same<ft::pair<const K, V> >
+					), true);
+
+		check(3, ft::lexicographical_compare(
+					ma.begin(), ++++ma.begin(), ma.begin(), ++ma.begin(), v_is_same<ft::pair<const K, V> >
+					), true);
+
+		check(4, ft::lexicographical_compare(
+					ma.begin(), ++ma.begin(), ma.begin(), ++++ma.begin(), v_is_same<ft::pair<const K, V> >
+					), true);
+
+		check(5, ft::lexicographical_compare(
+					ma.begin(), ++++ma.begin(), ma.begin(), ++++ma.begin(), v_is_same<ft::pair<const K, V> >
+					), true);
+
+		check(6, ft::lexicographical_compare(
+					ma.begin(), ++++ma.begin(), ma.begin(), ++++++ma.begin(), v_is_same<ft::pair<const K, V> >
+					), true);
+
+		{
+			ft::map<K, V> mb(ma);
+			mb[K(3)] = V(2);
+
+			check(7, ft::lexicographical_compare(
+						ma.begin(), ++ma.begin(), mb.begin(), ++++mb.begin(), v_is_same<ft::pair<const K, V> >
+						), true);
+
+			mb[K(3)] = V(0);
+
+			check(8, ft::lexicographical_compare(
+						ma.begin(), ++ma.begin(), mb.begin(), ++++mb.begin(), v_is_same<ft::pair<const K, V> >
+						), true);
+
+			mb[K(2)] = V(22);
+
+			check(9, ft::lexicographical_compare(
+						ma.begin(), ++ma.begin(), mb.begin(), ++++mb.begin(), v_is_same<ft::pair<const K, V> >
+						), true);
+
+			mb[K(2)] = V(0);
+
+			check(10, ft::lexicographical_compare(
+						ma.begin(), ++ma.begin(), mb.begin(), ++++mb.begin(), v_is_same<ft::pair<const K, V> >
+						), true);
+
+			mb.erase(K(2));
+			mb.erase(K(3));
+
+			check(11, ft::lexicographical_compare(
+						ma.begin(), ++++ma.begin(), mb.begin(), ++++mb.begin(), v_is_same<ft::pair<const K, V> >
+						), true);
+		}
+
+		{
+			ft::map<K, V> mb(ma);
+			mb[K(9)] = V(12);
+
+			check(12, ft::lexicographical_compare(
+						ma.begin(), ma.end(), mb.begin(), mb.end(), v_is_same<ft::pair<const K, V> >
+						), true);
+
+			mb[K(9)] = V(10);
+
+			check(13, ft::lexicographical_compare(
+						ma.begin(), ma.end(), mb.begin(), mb.end(), v_is_same<ft::pair<const K, V> >
+						), true);
+		}
 	}
 
 	title("ft::equal");

@@ -6,13 +6,14 @@
 #    By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/08 11:41:00 by fde-capu          #+#    #+#              #
-#    Updated: 2021/12/14 11:12:20 by fde-capu         ###   ########.fr        #
+#    Updated: 2021/12/14 11:25:29 by fde-capu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	ft_containers
 NAMESTL	=	stl_containers
 SEED	=	42
+check	=	'_EQ_LEXICO_'
 
 SRCS	=	\
 			src/ft_tree.cpp main.cpp \
@@ -40,7 +41,6 @@ HEAD	=	Makefile \
 			unit/unit_main.h unit/Chronometer.hpp
 
 SHELL	=	/bin/sh
-check	=	'_SIMPLE_'
 CCFLAGS	=	-Wall -Werror -Wextra -g
 CC98	=	clang++ $(CCFLAGS) -std=c++98 -DSECTION=$(check)
 CC11	=	clang++ $(CCFLAGS) -DSECTION=$(check)
