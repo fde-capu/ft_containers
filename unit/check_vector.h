@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:58:38 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/14 10:07:27 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/14 11:25:05 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,17 @@ void check_vector()
 		check(13, yy.capacity(), typename ft::vector<T>::size_type(26));
 		yy.reserve(27);
 		check(14, yy.capacity(), typename ft::vector<T>::size_type(27));
+
+		{
+			ft::vector<T> zz(10, 42);
+			zz.resize(500);
+			show_vector(zz);
+		}
+		{
+			ft::vector<T> zz(10, 42);
+			zz.resize(3);
+			show_vector(zz);
+		}
 
 		title("Element Access");
 		yy = xx;
