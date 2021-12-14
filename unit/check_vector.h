@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:58:38 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/13 02:13:05 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/14 10:07:27 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,6 +220,11 @@ void check_vector()
 			ft::vector<T> ww = rnd_vec<T>(i);
 			check(64 + j++, ww.capacity(), next_sqr<T>(i));
 		}}
+		{
+			ft::vector<T> kk;
+			kk.push_back(char(42));
+			check(75, 1, 1);
+		}
 
 		title("- pop_back");
 		{
