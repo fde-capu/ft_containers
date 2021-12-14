@@ -6,7 +6,7 @@
 /*   By: iwillens <iwillens@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:38:47 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/13 18:08:45 by iwillens         ###   ########.fr       */
+/*   Updated: 2021/12/14 15:02:26 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -445,9 +445,9 @@ namespace ft
 					tree_ptr pos = pos_and_piv.first;
 					tree_ptr piv = pos_and_piv.second;
 					iterator piv_it = static_cast<iterator>(piv);
-					bool dir = key_compare(KoV(v), key(piv));
-					if (dir && piv_it == begin()) // left!
+					if (piv_it == begin()) // left!
 						return ft::pair<iterator, bool>(insert(pos, piv, v), true);
+					bool dir = key_compare(KoV(v), key(piv));
 					if (dir)
 						--piv_it;
 					if (key_compare(key(piv_it.node), KoV(v)))
