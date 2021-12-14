@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:38:51 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/12 11:37:30 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/14 13:34:31 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "ft_pair.h"
 # include <memory> // std::allocator
 # include <cstddef> // size_t
-# include "ft_iterator.h"
 
 namespace ft
 {

@@ -6,14 +6,14 @@
 #    By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/08 11:41:00 by fde-capu          #+#    #+#              #
-#    Updated: 2021/12/14 08:16:23 by fde-capu         ###   ########.fr        #
+#    Updated: 2021/12/14 13:33:28 by fde-capu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	ft_containers
 NAMESTL	=	stl_containers
 SEED	=	42
-check	=	'_EQ_LEXICO_'
+check	=	'_ITERATOR_'
 
 SRCS	=	\
 			src/ft_tree.cpp main.cpp \

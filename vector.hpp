@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: iwillens <iwillens@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:53:23 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/13 02:34:49 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/14 13:32:33 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,7 +245,7 @@ namespace ft
 					{
 						this->_m_free();
 						size_t new_cap =
-							static_cast<long long>(ft::distance(origin_first, origin_last)) > static_cast<long long>(capacity()) ?
+							static_cast<size_t>(ft::distance(origin_first, origin_last)) > static_cast<size_t>(capacity()) ?
 							ft::distance(origin_first, origin_last) : capacity();
 						this->_m_start = this->_m_allocate(new_cap);
 						this->_m_finish = _copy(origin_first, origin_last, this->_m_start);
