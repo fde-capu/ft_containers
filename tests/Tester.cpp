@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tester.cpp                                       :+:      :+:    :+:   */
+/*   Tester.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwillens <iwillens@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 18:48:06 by iwillens          #+#    #+#             */
-/*   Updated: 2021/09/24 17:08:44 by iwillens         ###   ########.fr       */
+/*   Updated: 2021/12/14 13:24:15 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ ft::Tester::Tester(std::string s, int color, int attributes, int background)
         this->lightBackground();
     attributes = attributes & 15;
     if (attributes == CLR_BOLD)
+	{
         this->Bold();
+	}
 	this->_data = this->_allocator.allocate(0);
 }
 
