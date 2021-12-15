@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 23:05:51 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/14 23:05:52 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/15 02:40:00 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ namespace ft
 				{
 					if (!bypass_check && !need_expansion(size_to_fit))
 						return ;
-					size_type new_size = size();
-					new_size = new_size ? new_size : 1;
+					size_type new_size = size() ? size() : 1;
 					while (new_size < size_to_fit)
 						new_size *= 2;
 					reserve(new_size);
@@ -151,8 +150,7 @@ namespace ft
 				{
 					if (this == &rhs)
 						return *this;
-					if (!empty())
-						this->_m_free();
+					this->_m_free();
 					this->_m_start = this->_m_allocate(rhs.size());
 					this->_m_finish = _copy(rhs.begin(), rhs.end(), this->_m_start);
 					this->_m_end_of_storage = this->_m_start + rhs.size();

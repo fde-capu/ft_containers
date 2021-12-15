@@ -6,7 +6,7 @@
 /*   By: iwillens <iwillens@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 13:56:14 by iwillens          #+#    #+#             */
-/*   Updated: 2021/12/14 20:27:02 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/14 23:44:23 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,16 @@ std::string test2()
 		array[i] = i;
 	T1 v;
 	T2 tmp(array, array + 5);
-	v.push_back(tmp); //   5 10                11      16
-	v.push_back(tmp); // 1 6            7 8  10  12   15
-	v.push_back(tmp); // 2 7        3(2) 4(2)     9
-	v.push_back(tmp); // 3 8          5 6         13 14
-	v.push_back(tmp); // 4 9   1(4) 2(4)
-//	for (typename T1::reverse_iterator it = v.rbegin(); it != v.rend(); it++)
-//	{
-//		for (typename T2::reverse_iterator it2 = (*it).rbegin(); it2 != (*it).rend(); it2++)
-//			s += ft::to_string(*it2);
-//	}
+	v.push_back(tmp);
+	v.push_back(tmp);
+	v.push_back(tmp);
+	v.push_back(tmp);
+	v.push_back(tmp);
+	for (typename T1::reverse_iterator it = v.rbegin(); it != v.rend(); it++)
+	{
+		for (typename T2::reverse_iterator it2 = (*it).rbegin(); it2 != (*it).rend(); it2++)
+			s += ft::to_string(*it2);
+	}
 	return (s);
 }
 
