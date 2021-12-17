@@ -6,7 +6,7 @@
 /*   By: iwillens <iwillens@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:38:47 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/14 17:51:22 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/17 20:32:51 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,17 @@ namespace ft
 		_node*				sibling();
 		_node*				next();
 		_node*				prev();
+		bool has_two_null_children();
+		bool has_only_one_child();
+		_node* the_only_child();
+		bool has_both_children();
+		_node* close_nephew();
+		_node* far_nephew();
+		bool two_black_children();
 	};
+
+	void _tree_rot_as(_node* const ref, _node* const pivot, _node*& root);
+	void _tree_rot_not_as(_node* const ref, _node* const pivot, _node*& root);
 
 	void _tree_rebalance(_node*, _node*&);
 
@@ -466,27 +476,134 @@ namespace ft
 					return insert_unique(++first, last);
 				}
 
-				void erase(iterator pos)
+			private:
+				_node* pick_one_a(_node* pos, _node* rep)
 				{
-					tree foo;
-					iterator s = static_cast<iterator>(begin());
-					iterator e = static_cast<iterator>(end());
-					while (s != e)
+					if (pos->has_two_null_children())
+						return 0;
+					if (pos->has_only_one_child())
+						return pos->the_only_child();
+					if (pos->has_both_children())
+						return rep->right;
+					throw ("Ops!");
+					return 0;
+				}
+
+				bool pick_one_b(_node* pos, _node* rep, _node* x)
+				{
+					if (pos->color == red && (rep->color == red || !rep))
+						return true;
+					if (pos->color == red && rep->color == black)
 					{
-						if (s == pos)
-						{
-							s++;
-							continue ;
-						}
-						foo.insert_unique(*s);
-						s++;
+						rep->color = red;
+						return false;
 					}
-					swap(foo);
+					if (pos->color == black && rep->color == red)
+					{
+						rep->color = black;
+						return true;
+					}
+					if (pos->color == black && (!rep || rep->color == black))
+						return (x == &root) ? true : false; 
+					throw ("Something wrong.");
+					return true; // Never get to this line.
+				}
+
+				bool case_0(_node* x)
+				{
+					x->color = black;
+					return true;
+				}
+
+				bool case_1(_node* x, _node*& w)
+				{
+					w->color = black;
+					x->parent->color = red;
+					_tree_rot_as(x, x->parent, root_node_ref());
+					w = x->sibling();
+					return choose_2_3_or_4(x, w);
+				}
+
+				bool case_2(_node*& x, _node* w)
+				{
+					w->color = red;
+					x = x->parent;
+					if (x->color == red)
+					{
+						x->color = black;
+						return true;
+					}
+					if (x->color == black && x != &root)
+						return choose_1_2_3_or_4(x);
+					if (x->color == black && x == &root)
+						return true;
+					throw("Ooops!");
+					return true;
+				}
+
+				bool case_3(_node* x, _node*& w)
+				{
+					x->close_nephew()->color = black;
+					w->color = red;
+					_tree_rot_not_as(x, w, root_node_ref());
+					w = x->sibling();
+					return case_4(x, w);
+				}
+
+				bool case_4(_node* x, _node* w)
+				{
+					w->color = x->parent->color;
+					x->parent->color = black;
+					x->far_nephew()->color = black;
+					_tree_rot_as(x, x->parent, root_node_ref());
+					return true;
+				}
+
+				bool choose_1_2_3_or_4(_node* x)
+				{
+					if (x->color == black && x->sibling()->color == red)
+						return case_1(x, x->sibling());
+					return choose_2_3_or_4(x);
+				}
+
+				bool choose_2_3_or_4(_node* x, _node* w)
+				{
+					if (x->color == black && w->color == black && w->two_black_children())
+						return case_2(x, w);
+					if (x->color == black && w->color == black && x->close_nephew()->color == red && x->far_nephew()->color == black)
+						return case_3(x, w);
+					if (x->color == black && w->color == black && x->far_nephew()->color == red)
+						return case_4(x, w);
+					throw("Oops");
+					return true;
+				}
+
+				bool proceed_to_case(_node* x)
+				{
+					if (x->color == red)
+						return case_0(x);
+					_node* w = x->sibling();
+					if (x->color == black && w->color == red)
+						return case_1(x, w);
+					return choose_2_3_or_4(x, w);
+				}
+
+			public:
+				void erase(iterator pos_as_it)
+				{
+					_node* pos = pos_as_it.node;
+					_node* replacement = pos->next();
+					_node* x = pick_one_a(pos, replacement);
+					if (pick_one_b(pos, replacement, x))
+						return ; // done.
+					if (proceed_to_case(x))
+						return ; // done
+					// not done?...
 				}
 
 				size_t erase(c_key_ref v)
 				{
-					iterator h = find(v);
+					tree_ptr h = find(v);
 					if (h == tree_end())
 						return 0;
 					erase(h);

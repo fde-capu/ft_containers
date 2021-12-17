@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:51:47 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/12 06:54:50 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/17 20:25:40 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,15 @@ namespace ft
 			return n->leftmost_child(n->right);
 	}
 
+	_node* _node::close_nephew()
+	{ return this->is_left() ? this->sibling()->left : this->sibling()->right; }
+
+	_node* _node::far_nephew()
+	{ return this->is_left() ? this->sibling()->right : this->sibling()->left; }
+
+	bool _node::two_black_children()
+	{ return this->left->color == black && this->right->color == black; }
+
 	_node* _node::prev()
 	{
 		_node* n = this;
@@ -70,6 +79,18 @@ namespace ft
 			n->rightmost_parent(n)->parent
 			: n->rightmost_child(n->left);
 	}
+
+	bool _node::has_two_null_children()
+	{ return this->left == 0 && this->right == 0; }
+
+	bool _node::has_only_one_child()
+	{ return (this->left && this->right == 0) || (this->left == 0 && this->right); }
+
+	_node* _node::the_only_child()
+	{ return this->left && this->right == 0 ? this->left : this->left == 0 && this->right ? this->right : 0; }
+
+	bool _node::has_both_children()
+	{ return this->left && this->right; }
 
 	void _tree_rot_l(_node* const pivot, _node*& root)
 	{
