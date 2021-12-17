@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:51:47 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/17 20:25:40 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/17 22:15:52 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,12 @@ namespace ft
 
 	bool _node::has_both_children()
 	{ return this->left && this->right; }
+
+	_node* _node::opposite_child()
+	{ return this->is_left() ? this->right : this->left; }
+
+	_node* _node::same_dir_child()
+	{ return this->is_left() ? this->left : this->right; }
 
 	void _tree_rot_l(_node* const pivot, _node*& root)
 	{

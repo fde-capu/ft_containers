@@ -6,7 +6,7 @@
 /*   By: iwillens <iwillens@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:38:47 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/17 20:32:51 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/17 22:45:06 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ namespace ft
 		_node* close_nephew();
 		_node* far_nephew();
 		bool two_black_children();
+		_node* opposite_child();
+		_node* same_dir_child();
 	};
 
 	void _tree_rot_as(_node* const ref, _node* const pivot, _node*& root);
@@ -524,7 +526,7 @@ namespace ft
 					return choose_2_3_or_4(x, w);
 				}
 
-				bool case_2(_node*& x, _node* w)
+				bool case_2(_node*& x, _node*& w)
 				{
 					w->color = red;
 					x = x->parent;
@@ -534,7 +536,7 @@ namespace ft
 						return true;
 					}
 					if (x->color == black && x != &root)
-						return choose_1_2_3_or_4(x);
+						return choose_1_2_3_or_4(x, w);
 					if (x->color == black && x == &root)
 						return true;
 					throw("Ooops!");
@@ -559,20 +561,20 @@ namespace ft
 					return true;
 				}
 
-				bool choose_1_2_3_or_4(_node* x)
+				bool choose_1_2_3_or_4(_node* x, _node*& w)
 				{
-					if (x->color == black && x->sibling()->color == red)
-						return case_1(x, x->sibling());
-					return choose_2_3_or_4(x);
+					if (x->color == black && w->color == red)
+						return case_1(x, w);
+					return choose_2_3_or_4(x, w);
 				}
 
-				bool choose_2_3_or_4(_node* x, _node* w)
+				bool choose_2_3_or_4(_node* x, _node*& w)
 				{
-					if (x->color == black && w->color == black && w->two_black_children())
+					if ((!x || x->color == black) && w && w->color == black && w->two_black_children())
 						return case_2(x, w);
-					if (x->color == black && w->color == black && x->close_nephew()->color == red && x->far_nephew()->color == black)
+					if ((!x || x->color == black) && w && w->color == black && w->opposite_child()->color == red && w->same_dir_child()->color == black)
 						return case_3(x, w);
-					if (x->color == black && w->color == black && x->far_nephew()->color == red)
+					if ((!x || x->color == black) && w && w->color == black && w->same_dir_child()->color == red)
 						return case_4(x, w);
 					throw("Oops");
 					return true;
@@ -583,7 +585,7 @@ namespace ft
 					if (x->color == red)
 						return case_0(x);
 					_node* w = x->sibling();
-					if (x->color == black && w->color == red)
+					if (x->color == black && w && w->color == red)
 						return case_1(x, w);
 					return choose_2_3_or_4(x, w);
 				}
@@ -596,14 +598,14 @@ namespace ft
 					_node* x = pick_one_a(pos, replacement);
 					if (pick_one_b(pos, replacement, x))
 						return ; // done.
-					if (proceed_to_case(x))
+					if (x && proceed_to_case(x))
 						return ; // done
 					// not done?...
 				}
 
 				size_t erase(c_key_ref v)
 				{
-					tree_ptr h = find(v);
+					const_iterator h = find(v);
 					if (h == tree_end())
 						return 0;
 					erase(h);
