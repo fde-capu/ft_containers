@@ -6,7 +6,7 @@
 /*   By: iwillens <iwillens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 23:04:20 by iwillens          #+#    #+#             */
-/*   Updated: 2021/12/17 23:27:45 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/19 19:59:32 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,15 @@ void run_tests (int argc, char **argv, int cmd_pos)
 
 void print_title(void)
 {
-	std::string s[4];
-	s[0] = std::string("\033[38;2;123;145;255m _         _  _  _");
-	s[1] = std::string("\033[38;2;87;115;255m<_> _ _ _ <_>| || | ___ ._ _  ___");
-	s[2] = std::string("\033[38;2;207;59;255m| || | | || || || |/ ._>| ' |<_-<");
-	s[3] = std::string("\033[38;2;255;135;255m|_||__/_/ |_||_||_|\\___.|_|_|/__/\033[0m");
-	std::cout << s[0] << std::endl;
-	std::cout << s[1] << std::endl;
-	std::cout << s[2] << std::endl;
-	std::cout << s[3] << std::endl << std::endl;
+//	std::string s[4];
+//	s[0] = std::string("\033[38;2;123;145;255m _         _  _  _");
+//	s[1] = std::string("\033[38;2;87;115;255m<_> _ _ _ <_>| || | ___ ._ _  ___");
+//	s[2] = std::string("\033[38;2;207;59;255m| || | | || || || |/ ._>| ' |<_-<");
+//	s[3] = std::string("\033[38;2;255;135;255m|_||__/_/ |_||_||_|\\___.|_|_|/__/\033[0m");
+//	std::cout << s[0] << std::endl;
+//	std::cout << s[1] << std::endl;
+//	std::cout << s[2] << std::endl;
+//	std::cout << s[3] << std::endl << std::endl;
 }
 
 void print_help(void)

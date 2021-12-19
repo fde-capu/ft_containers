@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 18:55:59 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/19 19:31:51 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/19 20:12:09 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -608,8 +608,15 @@ namespace ft
 						return ; // done.
 					}
 					if (x && proceed_to_case(x))
+					{
+						if (pos->is_right())
+							pos->parent->right = replacement;
+						else if (pos->is_left())
+							pos->parent->left = replacement;
+						replacement->parent = pos->parent;
 						return ; // done.
-					// not done?...
+					}
+					return erase(pos_as_it);
 				}
 
 				size_t erase(c_key_ref v)
@@ -623,33 +630,8 @@ namespace ft
 
 				void erase(iterator first, iterator last)
 				{
-					if (first == last)
-						return ;
-					tree foo;
-					iterator s = static_cast<iterator>(begin());
-					iterator e = static_cast<iterator>(end());
-					if (s == first && e == last)
-						return clear();
-					bool do_not = false;
-					while (s != e)
-					{
-						if (s == first)
-						{
-							do_not = true;
-							s++;
-							continue ;
-						}
-						if (s == last)
-							do_not = false;
-						if (do_not)
-						{
-							s++;
-							continue ;
-						}
-						foo.insert_unique(*s);
-						s++;
-					}
-					swap(foo);
+					while (first != last)
+						erase(first++);
 				}
 
 				void clear() 

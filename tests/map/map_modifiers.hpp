@@ -6,7 +6,7 @@
 /*   By: iwillens <iwillens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 13:24:37 by iwillens          #+#    #+#             */
-/*   Updated: 2021/12/19 19:08:08 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/19 19:57:23 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ std::string map_erase1()
 	for(int i = 0; i <= 10; i++)
 		v.insert(typename T::value_type(i, i));
 	v.erase(v.begin(), v.end());
-	s = map_attributes<T>(v);
+	s = "erase1: " + map_attributes<T>(v);
 	return (ft::Tester::Return(s));
 }
 
@@ -101,10 +101,9 @@ std::string map_erase2()
 
 	for(int i = 0; i <= 10; i++)
 		v.insert(typename T::value_type(i, i));
-	s += map_attributes<T>(v);
 	typename T::iterator it = v.insert(typename T::value_type(19, 44)).first;
 	v.erase(it);
-	s += map_attributes<T>(v);
+	s += "erase2: " + map_attributes<T>(v);
 	return (ft::Tester::Return(s));
 }
 
@@ -117,7 +116,7 @@ std::string map_erase3()
 	for(int i = 0; i <= 10; i++)
 		v.insert(typename T::value_type(i, i));
 	v.erase(5);
-	s = map_attributes<T>(v);
+	s = "erase3: " + map_attributes<T>(v);
 	return (ft::Tester::Return(s));
 }
 
@@ -130,7 +129,7 @@ std::string map_erase4()
 	for(int i = 0; i <= 10; i++)
 		v.insert(typename T::value_type(i, i));
 	v.erase(++v.begin(), --v.end());
-	s = map_attributes<T>(v);
+	s = "erase4: " + map_attributes<T>(v);
 	return (ft::Tester::Return(s));
 }
 
