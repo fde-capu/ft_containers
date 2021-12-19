@@ -6,7 +6,7 @@
 /*   By: iwillens <iwillens@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 13:24:37 by iwillens          #+#    #+#             */
-/*   Updated: 2021/12/19 19:00:30 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/19 19:08:08 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,10 @@ std::string map_erase2()
 
 	for(int i = 0; i <= 10; i++)
 		v.insert(typename T::value_type(i, i));
+	s += map_attributes<T>(v);
 	typename T::iterator it = v.insert(typename T::value_type(19, 44)).first;
 	v.erase(it);
-	s = map_attributes<T>(v);
+	s += map_attributes<T>(v);
 	return (ft::Tester::Return(s));
 }
 

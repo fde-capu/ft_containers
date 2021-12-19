@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 18:55:59 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/19 18:56:01 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/19 19:31:51 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -599,9 +599,16 @@ namespace ft
 					_node* replacement = pos->next();
 					_node* x = pick_one_a(pos, replacement);
 					if (pick_one_b(pos, replacement, x))
+					{
+						if (pos->is_right())
+							pos->parent->right = replacement;
+						else if (pos->is_left())
+							pos->parent->left = replacement;
+						replacement->parent = pos->parent;
 						return ; // done.
+					}
 					if (x && proceed_to_case(x))
-						return ; // done
+						return ; // done.
 					// not done?...
 				}
 
