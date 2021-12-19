@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 18:55:59 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/19 20:12:09 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/20 00:08:28 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ namespace ft
 		bool two_black_children();
 		_node* opposite_child();
 		_node* same_dir_child();
+		void in_place_of(_node*);
+		void move_branch_to(_node* splice);
 	};
 
 	void _tree_rot_as(_node* const ref, _node* const pivot, _node*& root);
@@ -481,71 +483,101 @@ namespace ft
 				}
 
 			private:
-				_node* pick_one_a(_node* pos, _node* rep)
+				void pick_one_a(_node* del, _node*& x, _node*& rep)
 				{
-					if (pos->has_two_null_children())
-						return 0;
-					if (pos->has_only_one_child())
-						return pos->the_only_child();
-					if (pos->has_both_children())
-						return rep->right;
-					throw ("Ops!");
-					return 0;
+					if (del->has_both_children())
+					{
+						rep = del->next();
+						x = rep->right;
+						return ;
+					}
+					if (del->has_only_one_child())
+					{
+						rep = x = del->the_only_child();
+						return ;
+					}
+					if (del->has_two_null_children())
+					{
+						rep = x = del->right;
+						return ;
+					}
 				}
 
-				bool pick_one_b(_node* pos, _node* rep, _node* x)
+				void pick_one_b(_node* del, _node*& x, _node*& rep)
 				{
-					if (pos->color == red && (rep->color == red || !rep))
-						return true;
-					if (pos->color == red && rep->color == black)
+					if (del->color == red && (rep->color == red || !rep))
 					{
-						rep->color = red;
-						return false;
+						_node* splice = rep;
+						if (x != rep)
+							x->move_branch_to(rep);
+						splice->in_place_of(del);
+						return ;
 					}
-					if (pos->color == black && rep->color == red)
+					if (del->color == red && rep->color == black)
 					{
-						rep->color = black;
-						return true;
+						_node* splice = rep;
+						x->move_branch_to(rep);
+						splice->in_place_of(del);
+						splice->color = red;
+						proceed_to_case(x, rep->parent);
+						return ;
 					}
-					if (pos->color == black && (!rep || rep->color == black))
-						return (x == &root) ? true : false; 
-					throw ("Something wrong.");
-					return true; // Never get to this line.
+					if ((del->color == black) && rep && rep->color == red)
+					{
+						_node* splice = rep;
+						x->in_place_of(rep);
+						splice->in_place_of(del);
+						splice->color = black;
+						return ;
+					}
+					if ((del->color == black) && (!rep || rep->color == black))
+					{
+						_node* splice = rep;
+						if (x != rep)
+							x->move_branch_to(rep);
+						splice->in_place_of(del);
+						if (!rep)
+							return ;
+						proceed_to_case(x, rep->parent);
+					}
+					return ;
 				}
 
-				bool case_0(_node* x)
+				void case_0(_node* x)
 				{
 					x->color = black;
-					return true;
+					return ;
 				}
 
-				bool case_1(_node* x, _node*& w)
+				void case_1(_node* x, _node*& w)
 				{
 					w->color = black;
 					x->parent->color = red;
+					if (!x->parent->right)
+						return ;
 					_tree_rot_as(x, x->parent, root_node_ref());
 					w = x->sibling();
 					return choose_2_3_or_4(x, w);
 				}
 
-				bool case_2(_node*& x, _node*& w)
+				void case_2(_node*& x, _node*& w)
 				{
 					w->color = red;
 					x = x->parent;
 					if (x->color == red)
 					{
 						x->color = black;
-						return true;
+						return ;
 					}
 					if (x->color == black && x != &root)
 						return choose_1_2_3_or_4(x, w);
 					if (x->color == black && x == &root)
-						return true;
+						return ;
 					throw("Ooops!");
-					return true;
+					return ;
 				}
 
-				bool case_3(_node* x, _node*& w)
+				void case_3(_node* x, _node*& w)
 				{
 					x->close_nephew()->color = black;
 					w->color = red;
@@ -554,69 +586,55 @@ namespace ft
 					return case_4(x, w);
 				}
 
-				bool case_4(_node* x, _node* w)
+				void case_4(_node* x, _node* w)
 				{
 					w->color = x->parent->color;
 					x->parent->color = black;
 					x->far_nephew()->color = black;
 					_tree_rot_as(x, x->parent, root_node_ref());
-					return true;
 				}
 
-				bool choose_1_2_3_or_4(_node* x, _node*& w)
+				void choose_1_2_3_or_4(_node* x, _node*& w)
 				{
-					if (x->color == black && w->color == red)
+					if ((!x || x->color == black) && w && w->color == red)
 						return case_1(x, w);
 					return choose_2_3_or_4(x, w);
 				}
 
-				bool choose_2_3_or_4(_node* x, _node*& w)
+				void choose_2_3_or_4(_node* x, _node*& w)
 				{
-					if ((!x || x->color == black) && w && w->color == black && w->two_black_children())
-						return case_2(x, w);
-					if ((!x || x->color == black) && w && w->color == black && w->opposite_child()->color == red && w->same_dir_child()->color == black)
-						return case_3(x, w);
-					if ((!x || x->color == black) && w && w->color == black && w->same_dir_child()->color == red)
-						return case_4(x, w);
-					throw("Oops");
-					return true;
+					if ((!x || x->color == black) && w && w->color == black)
+					{
+						if (w->two_black_children())
+							return case_2(x, w);
+						if (w->opposite_child()->color == red && (!w->same_dir_child() || w->same_dir_child()->color == black))
+							return case_3(x, w);
+						if (w->same_dir_child()->color == red)
+							return case_4(x, w);
+					}
 				}
 
-				bool proceed_to_case(_node* x)
+				void proceed_to_case(_node* x, _node* new_parent)
 				{
-					if (x->color == red)
+					if (x && x->color == red)
 						return case_0(x);
-					_node* w = x->sibling();
-					if (x->color == black && w && w->color == red)
-						return case_1(x, w);
-					return choose_2_3_or_4(x, w);
+					_node* w;
+					if (x)
+						w = x->sibling();
+					else
+						w = new_parent->the_only_child();
+					choose_1_2_3_or_4(x, w);
 				}
 
 			public:
 				void erase(iterator pos_as_it)
 				{
-					_node* pos = pos_as_it.node;
-					_node* replacement = pos->next();
-					_node* x = pick_one_a(pos, replacement);
-					if (pick_one_b(pos, replacement, x))
-					{
-						if (pos->is_right())
-							pos->parent->right = replacement;
-						else if (pos->is_left())
-							pos->parent->left = replacement;
-						replacement->parent = pos->parent;
-						return ; // done.
-					}
-					if (x && proceed_to_case(x))
-					{
-						if (pos->is_right())
-							pos->parent->right = replacement;
-						else if (pos->is_left())
-							pos->parent->left = replacement;
-						replacement->parent = pos->parent;
-						return ; // done.
-					}
-					return erase(pos_as_it);
+					_node* del = pos_as_it.node;
+					_node* replacement;
+					_node* x;
+					pick_one_a(del, x, replacement);
+					pick_one_b(del, x, replacement);
+					return ;
 				}
 
 				size_t erase(c_key_ref v)

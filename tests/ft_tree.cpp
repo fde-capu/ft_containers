@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:51:47 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/17 22:15:52 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/19 23:57:09 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ namespace ft
 	{ return this->is_left() ? this->sibling()->right : this->sibling()->left; }
 
 	bool _node::two_black_children()
-	{ return this->left->color == black && this->right->color == black; }
+	{ return
+			(!this->left || this->left->color == black)
+		&&	(!this->right || this->right->color == black); }
 
 	_node* _node::prev()
 	{
@@ -98,9 +100,43 @@ namespace ft
 	_node* _node::same_dir_child()
 	{ return this->is_left() ? this->left : this->right; }
 
+	void _node::in_place_of(_node* splice)
+	{
+		if (&*this)
+		{
+			this->parent = splice->parent;
+			if (splice->is_left())
+				splice->parent->left = this;
+			else if (splice->is_right())
+				splice->parent->right = this;
+			_node* foo = this->left;
+			this->left = splice->left;
+			splice->left = foo;
+			foo = this->right;
+			this->right = splice->right;
+			splice->right = foo;
+		}
+		else
+		{
+			if (splice->is_left())
+				splice->parent->left = 0;
+			else if (splice->is_right())
+				splice->parent->right = 0;
+		}
+	}
+
+	void _node::move_branch_to(_node* splice)
+	{
+		this->parent = splice->parent;
+		if (splice->is_left())
+			splice->parent->left = this;
+		else if (splice->is_right())
+			splice->parent->right = this;
+	}
+
 	void _tree_rot_l(_node* const pivot, _node*& root)
 	{
-		_node* const a = pivot->right->left;
+		_node* const a = pivot->right ? pivot->right->left : 0;
 		_node* const y = pivot->right;
 		_node* const new_pivot = pivot->parent;
 
