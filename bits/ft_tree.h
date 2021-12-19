@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tree.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwillens <iwillens@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/08 11:38:47 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/17 22:45:06 by fde-capu         ###   ########.fr       */
+/*   Created: 2021/12/19 18:55:59 by fde-capu          #+#    #+#             */
+/*   Updated: 2021/12/19 18:56:01 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include "ft_utility.h" // ft::pair
 # include "ft_algobase.h" // lexicographical_compare
 # include "ft_iterator.h"
+
+#include <iostream> // XXX
 
 namespace ft
 { 
@@ -605,7 +607,7 @@ namespace ft
 
 				size_t erase(c_key_ref v)
 				{
-					const_iterator h = find(v);
+					iterator h = find(v);
 					if (h == tree_end())
 						return 0;
 					erase(h);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   type_traits.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iwillens <iwillens@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/08 11:39:19 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/13 17:53:03 by iwillens         ###   ########.fr       */
+/*   Created: 2021/12/19 18:57:02 by fde-capu          #+#    #+#             */
+/*   Updated: 2021/12/19 18:57:05 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ namespace ft
 	template<>
 		struct _is_integral_helper<unsigned long>
 		: public true_type {};
-
 
 	template<typename T>
 		struct is_integral

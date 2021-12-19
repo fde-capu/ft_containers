@@ -6,7 +6,7 @@
 /*   By: iwillens <iwillens@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 19:47:16 by iwillens          #+#    #+#             */
-/*   Updated: 2021/10/16 23:01:01 by iwillens         ###   ########.fr       */
+/*   Updated: 2021/12/17 23:07:28 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ void test_map(void)
 	ft::Tester tester;
 
 	tester.printTitle("Map");
-	test_map_constructors();
-	test_map_capacity();
-	test_map_iterators();
-	test_map_elementaccess();
+//	test_map_constructors();
+//	test_map_capacity();
+//	test_map_iterators();
+//	test_map_elementaccess();
 	test_map_modifiers();
-	test_map_operations();
-	test_map_overloads();
-	test_map_observers();
- 	test_map_largetests();
+//	test_map_operations();
+//	test_map_overloads();
+//	test_map_observers();
+ //	test_map_largetests();
 
 }
