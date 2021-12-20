@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 18:55:59 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/20 23:51:26 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/21 00:03:20 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,11 @@ namespace ft
 		_node*				sibling();
 		_node*				next();
 		_node*				prev();
-		bool has_two_null_children();
-		bool has_only_one_child();
 		_node* the_only_child();
 		bool has_both_children();
-		_node* close_nephew();
-		_node* far_nephew();
 		bool has_two_black_children();
-		_node* opposite_child();
-		_node* same_dir_child();
 		void in_place_of(_node*&);
-		void move_branch_to(_node* splice);
 		void set_parent(_node*&);
-		_node* opposite_child(_node*& ref);
-		bool has_black_right();
-		bool has_black_left();
 		_node*& left_bool(bool b);
 		bool has_black_bool(bool b);
 		void set_child_color(bool b, _rbcolor c);
