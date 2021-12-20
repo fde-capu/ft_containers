@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:51:47 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/19 23:57:09 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/20 20:15:36 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,42 @@ namespace ft
 			return n->leftmost_child(n->right);
 	}
 
+	void _node::set_parent(_node*& new_parent)
+	{
+		if (&*this)
+			this->parent = new_parent;
+	}
+
 	_node* _node::close_nephew()
 	{ return this->is_left() ? this->sibling()->left : this->sibling()->right; }
 
 	_node* _node::far_nephew()
 	{ return this->is_left() ? this->sibling()->right : this->sibling()->left; }
 
-	bool _node::two_black_children()
+	bool _node::has_two_black_children()
 	{ return
 			(!this->left || this->left->color == black)
 		&&	(!this->right || this->right->color == black); }
+	
+	bool _node::has_black_right()
+	{ return !this->right || this->right->color == black; }
+
+	bool _node::has_black_left()
+	{ return !this->left || this->left->color == black; }
+
+	bool _node::has_black_bool(bool b)
+	{ return (b && this->has_black_left()) || (!b && this->has_black_right()); }
+
+	void _node::set_child_color(bool b, _rbcolor c)
+	{
+		if (b && this->left)
+			this->left->color = c;
+		if (!b && this->right)
+			this->right->color = c;
+	}
+
+	_node*& _node::left_bool(bool b)
+	{ return b ? this->left : this->right; }
 
 	_node* _node::prev()
 	{
@@ -83,16 +109,19 @@ namespace ft
 	}
 
 	bool _node::has_two_null_children()
-	{ return this->left == 0 && this->right == 0; }
+	{ return !this->left && !this->right; }
 
 	bool _node::has_only_one_child()
-	{ return (this->left && this->right == 0) || (this->left == 0 && this->right); }
+	{ return (this->left && !this->right) || (!this->left && this->right); }
 
 	_node* _node::the_only_child()
-	{ return this->left && this->right == 0 ? this->left : this->left == 0 && this->right ? this->right : 0; }
+	{ return this->left && !this->right ? this->left : !this->left && this->right ? this->right : 0; }
 
 	bool _node::has_both_children()
 	{ return this->left && this->right; }
+
+	_node* _node::opposite_child(_node*& ref)
+	{ return ref->is_left() ? this->right : this->left; }
 
 	_node* _node::opposite_child()
 	{ return this->is_left() ? this->right : this->left; }
@@ -100,29 +129,12 @@ namespace ft
 	_node* _node::same_dir_child()
 	{ return this->is_left() ? this->left : this->right; }
 
-	void _node::in_place_of(_node* splice)
+	void _node::in_place_of(_node*& old)
 	{
-		if (&*this)
-		{
-			this->parent = splice->parent;
-			if (splice->is_left())
-				splice->parent->left = this;
-			else if (splice->is_right())
-				splice->parent->right = this;
-			_node* foo = this->left;
-			this->left = splice->left;
-			splice->left = foo;
-			foo = this->right;
-			this->right = splice->right;
-			splice->right = foo;
-		}
+		if (old->is_left())
+			old->parent->left = this;
 		else
-		{
-			if (splice->is_left())
-				splice->parent->left = 0;
-			else if (splice->is_right())
-				splice->parent->right = 0;
-		}
+			old->parent->right = this;
 	}
 
 	void _node::move_branch_to(_node* splice)
@@ -132,6 +144,11 @@ namespace ft
 			splice->parent->left = this;
 		else if (splice->is_right())
 			splice->parent->right = this;
+	}
+
+	void _tree_rot_bool_l(bool b, _node* const pivot, _node*& root)
+	{
+		b ? _tree_rot_l(pivot, root) : _tree_rot_r(pivot, root);
 	}
 
 	void _tree_rot_l(_node* const pivot, _node*& root)
