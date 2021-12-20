@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 18:55:59 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/20 21:01:26 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/20 21:55:51 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -491,7 +491,7 @@ namespace ft
 				}
 
 			private:
-				void twist(_node*& na, _node*& nb, bool dir, _node*& root)
+				void twist1(_node*& na, _node*& nb, bool dir, _node*& root)
 				{
 					na->color = black;
 					nb->color = red;
@@ -499,12 +499,54 @@ namespace ft
 					na = nb->left_bool(!dir);
 				}
 
-				void twist2(_node*& na, _node*& nb, bool dir, _node*& root)
+				void twist2(_node*& na, _node*& nb, _node*& nc)
+				{
+					na->color = red;
+					nb = nc;
+					nc = nc->parent;
+				}
+
+				void twist3(_node*& na, _node*& nb, bool dir, _node*& root)
 				{
 					na->left_bool(dir)->color = black;
 					na->color = red;
 					_tree_rot_bool_l(!dir, na, root);
 					na = nb->left_bool(!dir);
+				}
+				
+				void twist4(_node*& na, _node*& nb, bool dir, _node*& root)
+				{
+					na->color = nb->color;
+					nb->color = black;
+					na->set_child_color(!dir, black);
+					_tree_rot_bool_l(dir, nb, root);
+				}
+
+				void root_adjust(_node*& na, _node*& nb, _node*& nc)
+				{
+					if (na == nb)
+						nb = nc;
+					else
+						nc->in_place_of(na);
+				}
+
+				void most_adjust(_node*& na, _node*& nb)
+				{
+					if (leftmost() == na)
+						leftmost() = na->right ? nb->leftmost_child(nb) : na->parent;
+					if (rightmost() == na)
+						rightmost() = na->left ? nb->rightmost_child(nb) : na->parent;
+				}
+
+				_node*& triangulate(_node*& x, _node*& y, _node*& del)
+				{
+					if (y == del->right)
+						return y;
+					x->set_parent(y->parent);
+					y->parent->left = x;
+					y->right = del->right;
+					del->right->parent = y;
+					return y->parent;
 				}
 
 				_node* rebalance_for_erase(_node*& del, _node& header)
@@ -517,20 +559,8 @@ namespace ft
 					{
 						del->left->parent = y;
 						y->left = del->left;
-						if (y != del->right)
-						{
-							save_parent = y->parent;
-							x->set_parent(y->parent);
-							y->parent->left = x;
-							y->right = del->right;
-							del->right->parent = y;
-						}
-						else
-							save_parent = y;
-						if (del == root)
-							root = y;
-						else
-							y->in_place_of(del);
+						save_parent = triangulate(x, y, del);
+						root_adjust(del, root, y);
 						y->parent = del->parent;
 						ft::swap(y->color, del->color);
 						y = del;
@@ -539,14 +569,8 @@ namespace ft
 					{
 						save_parent = y->parent;
 						x->set_parent(y->parent);
-						if (del == root)
-							root = x;
-						else
-							x->in_place_of(del);
-						if (leftmost() == del)
-							leftmost() = del->right ? x->leftmost_child(x) : del->parent;
-						if (rightmost() == del)
-							rightmost() = del->left ? x->rightmost_child(x) : del->parent;
+						root_adjust(del, root, x);
+						most_adjust(del, x);
 					}
 					if (y->color != red)
 					{
@@ -555,29 +579,14 @@ namespace ft
 							bool go_left = x == save_parent->left;
 							_node* w = save_parent->left_bool(!go_left);
 							if (w->color == red)
-							{
-								twist(w, save_parent, go_left, root);
-							}
+								twist1(w, save_parent, go_left, root);
 							if (w->has_two_black_children())
-							{
-								w->color = red;
-								x = save_parent;
-								save_parent = save_parent->parent;
-							}
+								twist2(w, x, save_parent);
 							else
 							{
 								if (w->has_black_bool(!go_left))
-								{
-									twist2(w, save_parent, go_left, root);
-//									w->left_bool(go_left)->color = black;
-//									w->color = red;
-//									_tree_rot_bool_l(!go_left, w, root);
-//									w = save_parent->left_bool(!go_left);
-								}
-								w->color = save_parent->color;
-								save_parent->color = black;
-								w->set_child_color(!go_left, black);
-								_tree_rot_bool_l(go_left, save_parent, root);
+									twist3(w, save_parent, go_left, root);
+								twist4(w, save_parent, go_left, root);
 								break ;
 							}
 						}
