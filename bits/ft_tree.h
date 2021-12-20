@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 18:55:59 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/20 21:55:51 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/20 23:51:26 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -549,6 +549,46 @@ namespace ft
 					return y->parent;
 				}
 
+				void y_replace(_node*& del, _node*& x, _node*& y, _node*& save_parent, _node*& root)
+				{
+					del->left->parent = y;
+					y->left = del->left;
+					save_parent = triangulate(x, y, del);
+					root_adjust(del, root, y);
+					y->parent = del->parent;
+					ft::swap(y->color, del->color);
+					y = del;
+				}
+
+				void proceed(_node*& del, _node*& x, _node*& y, _node*& save_parent, _node*& root)
+				{
+					save_parent = y->parent;
+					x->set_parent(y->parent);
+					root_adjust(del, root, x);
+					most_adjust(del, x);
+				}
+
+				void erase_loop(_node*& x, _node*& save_parent, _node*& root)
+				{
+					while (x != root && (!x || x->color == black))
+					{
+						bool go_left = x == save_parent->left;
+						_node* w = save_parent->left_bool(!go_left);
+						if (w->color == red)
+							twist1(w, save_parent, go_left, root);
+						if (w->has_two_black_children())
+							twist2(w, x, save_parent);
+						else
+						{
+							if (w->has_black_bool(!go_left))
+								twist3(w, save_parent, go_left, root);
+							twist4(w, save_parent, go_left, root);
+							break ;
+						}
+					}
+					x ? x->color = black : 0;
+				}
+
 				_node* rebalance_for_erase(_node*& del, _node& header)
 				{
 					_node*& root = header.parent;
@@ -556,42 +596,11 @@ namespace ft
 					_node* x = y->has_both_children() ? y->right : y->the_only_child();
 					_node* save_parent = 0;
 					if (y != del)
-					{
-						del->left->parent = y;
-						y->left = del->left;
-						save_parent = triangulate(x, y, del);
-						root_adjust(del, root, y);
-						y->parent = del->parent;
-						ft::swap(y->color, del->color);
-						y = del;
-					}
+						y_replace(del, x, y, save_parent, root);
 					else
-					{
-						save_parent = y->parent;
-						x->set_parent(y->parent);
-						root_adjust(del, root, x);
-						most_adjust(del, x);
-					}
+						proceed(del, x, y, save_parent, root);
 					if (y->color != red)
-					{
-						while (x != root && (!x || x->color == black))
-						{
-							bool go_left = x == save_parent->left;
-							_node* w = save_parent->left_bool(!go_left);
-							if (w->color == red)
-								twist1(w, save_parent, go_left, root);
-							if (w->has_two_black_children())
-								twist2(w, x, save_parent);
-							else
-							{
-								if (w->has_black_bool(!go_left))
-									twist3(w, save_parent, go_left, root);
-								twist4(w, save_parent, go_left, root);
-								break ;
-							}
-						}
-						x ? x->color = black : 0;
-					}
+						erase_loop(x, save_parent, root);
 					return y;
 				}
 
