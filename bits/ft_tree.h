@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 18:55:59 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/20 20:45:58 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/20 21:01:26 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -499,6 +499,14 @@ namespace ft
 					na = nb->left_bool(!dir);
 				}
 
+				void twist2(_node*& na, _node*& nb, bool dir, _node*& root)
+				{
+					na->left_bool(dir)->color = black;
+					na->color = red;
+					_tree_rot_bool_l(!dir, na, root);
+					na = nb->left_bool(!dir);
+				}
+
 				_node* rebalance_for_erase(_node*& del, _node& header)
 				{
 					_node*& root = header.parent;
@@ -560,11 +568,11 @@ namespace ft
 							{
 								if (w->has_black_bool(!go_left))
 								{
-//									twist(w->left_bool(go_left), w, !go_left, root);
-									w->left_bool(go_left)->color = black;
-									w->color = red;
-									_tree_rot_bool_l(!go_left, w, root);
-									w = save_parent->left_bool(!go_left);
+									twist2(w, save_parent, go_left, root);
+//									w->left_bool(go_left)->color = black;
+//									w->color = red;
+//									_tree_rot_bool_l(!go_left, w, root);
+//									w = save_parent->left_bool(!go_left);
 								}
 								w->color = save_parent->color;
 								save_parent->color = black;
