@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 18:55:59 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/20 00:08:28 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/20 14:59:50 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ namespace ft
 
 	void _tree_rot_as(_node* const ref, _node* const pivot, _node*& root);
 	void _tree_rot_not_as(_node* const ref, _node* const pivot, _node*& root);
+	void _tree_rot_l(_node* const pivot, _node*& root);
+	void _tree_rot_r(_node* const pivot, _node*& root);
 
 	void _tree_rebalance(_node*, _node*&);
 
@@ -483,22 +485,162 @@ namespace ft
 				}
 
 			private:
-				void pick_one_a(_node* del, _node*& x, _node*& rep)
+			//////////////////
+				_node* rebalance_for_erase(_node*& del, _node& header)
 				{
-					if (del->has_both_children())
+					_node*& root = header.parent;
+					_node*& leftmost = header.left;
+					_node*& rightmost = header.right;
+					_node* y = del;
+					_node* x = 0;
+					_node* x_parent = 0;
+					pick_one_a(y, x);
+					if (y != del)
 					{
-						rep = del->next();
-						x = rep->right;
+						del->left->parent = y;
+						y->left = del->left;
+						if (y != del->right)
+						{
+							x_parent = y->parent;
+							if (x)
+								x->parent = y->parent;
+							y->parent->left = x;
+							y->right = del->right;
+							del->right->parent = y;
+						}
+						else
+						{
+							x_parent = y;
+						}
+						if (root == del)
+							root = y;
+						else if (del->is_left())
+							del->parent->left = y;
+						else
+							del->parent->right = y;
+						y->parent = del->parent;
+						ft::swap(y->color, del->color);
+						y = del;
+					}
+					else
+					{
+						x_parent = y->parent;
+						if (x)
+							x->parent = y->parent;
+						if (root == del)
+							root = x;
+						else
+						{
+							if (del->is_left())
+								del->parent->left = x;
+							else
+								del->parent->right = x;
+						}
+						if (leftmost == del)
+						{
+							if (!del->right)
+								leftmost = del->parent;
+							else
+								leftmost = x->leftmost_child(x);
+						}
+						if (rightmost == del)
+						{
+							if (!del->left)
+								rightmost = del->parent;
+							else
+								rightmost = x->rightmost_child(x);
+						}
+					}
+					if (y->color != red)
+					{
+						while (x != root && (!x || x->color == black))
+						{
+							if (x == x_parent->left)
+							{
+								_node* w = x_parent->right;
+								if (w->color == red)
+								{
+									w->color = black;
+									x_parent->color = red;
+									_tree_rot_l(x_parent, root);
+									w = x_parent->right;
+								}
+								if ((!w->left || w->left->color == black)
+								&& (!w->right || w->right->color == black))
+								{
+									w->color = red;
+									x = x_parent;
+									x_parent = x_parent->parent;
+								}
+								else
+								{
+									if (!w->right || w->right->color == black)
+									{
+										w->left->color = black;
+										w->color = red;
+										_tree_rot_r(w, root);
+										w = x_parent->right;
+									}
+									w->color = x_parent->color;
+									x_parent->color = black;
+									if (w->right)
+										w->right->color = black;
+									_tree_rot_l(x_parent, root);
+									break ;
+								}
+							}
+							else
+							{
+								_node* w = x_parent->left;
+								if (w->color == red)
+								{
+									w->color = black;
+									x_parent->color = red;
+									_tree_rot_r(x_parent, root);
+									w = x_parent->left;
+								}
+								if ((!w->left || w->left->color == black)
+								&& (!w->right || w->right->color == black))
+								{
+									w->color = red;
+									x = x_parent;
+									x_parent = x_parent->parent;
+								}
+								else
+								{
+									if (!w->left || w->left->color == black)
+									{
+										w->right->color = black;
+										w->color = red;
+										_tree_rot_l(w, root);
+										w = x_parent->left;
+									}
+									w->color = x_parent->color;
+									x_parent->color = black;
+									if (w->left)
+										w->left->color = black;
+									_tree_rot_r(x_parent, root);
+									break;
+								}
+							}
+						}
+						if (x)
+							x->color = black;
+					}
+					return y;
+				}
+
+				void pick_one_a(_node*& y, _node*& x)
+				{
+					if (y->has_only_one_child() || y->has_two_null_children())
+					{
+						x = y->the_only_child();
 						return ;
 					}
-					if (del->has_only_one_child())
+					if (y->has_both_children())
 					{
-						rep = x = del->the_only_child();
-						return ;
-					}
-					if (del->has_two_null_children())
-					{
-						rep = x = del->right;
+						y = y->leftmost_child(y->right);
+						x = y->right;
 						return ;
 					}
 				}
@@ -629,12 +771,9 @@ namespace ft
 			public:
 				void erase(iterator pos_as_it)
 				{
-					_node* del = pos_as_it.node;
-					_node* replacement;
-					_node* x;
-					pick_one_a(del, x, replacement);
-					pick_one_b(del, x, replacement);
-					return ;
+					tree_ptr del = static_cast<tree_ptr>(rebalance_for_erase(pos_as_it.node, root));
+					destroy_node(del);
+					--node_count;
 				}
 
 				size_t erase(c_key_ref v)
@@ -645,6 +784,8 @@ namespace ft
 					erase(h);
 					return 1;
 				}
+
+///////////////
 
 				void erase(iterator first, iterator last)
 				{
