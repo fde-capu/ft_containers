@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:39:33 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/12 07:17:35 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/21 14:34:42 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MAP_HPP
 
 # include "bits/ft_tree.h"
+# include <functional> // std::less
 
 namespace ft
 {
