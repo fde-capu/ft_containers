@@ -6,7 +6,7 @@
 #    By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/08 11:41:00 by fde-capu          #+#    #+#              #
-#    Updated: 2021/12/21 14:05:58 by fde-capu         ###   ########.fr        #
+#    Updated: 2021/12/21 14:26:47 by fde-capu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,11 @@ NAMESTL	=	stl_containers
 SEED	=	42
 
 SRCS	=	\
-			src/ft_tree.cpp main.cpp \
+			main.cpp \
+			src/ft_tree.cpp \
 			unit/unit_main.cpp \
-			unit/Chronometer.cpp unit/ft_main.cpp
+			unit/Chronometer.cpp \
+			unit/ft_main.cpp
 
 HEAD	=	Makefile \
 			stack.hpp \
