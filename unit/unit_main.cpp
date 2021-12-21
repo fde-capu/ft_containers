@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 12:52:08 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/13 12:38:52 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/21 15:25:00 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ unsigned char random_char()
 int unit_main(int argc, char** argv) 
 {
 #if STL
-		ft::cout << "ft = std; `ft::cout` and `ft::endl` working." << ft::endl;
+		ft::cout << "STL mode | ft = std; `ft::cout` and `ft::endl` working." << ft::endl;
 #else
-		std::cout << "FT mode (namespace ft = ft)" << std::endl;
+		std::cout << "FT mode | namespace ft = ft" << std::endl;
 		// ft::cout << "This would not compile. There is no cout in namespace ft." << ft::endl;
 #endif
 
@@ -169,16 +169,7 @@ int unit_main(int argc, char** argv)
 		std::cout << std::endl << "[ is_integral ]" << std::endl;
 		std::cout << chrono.start() << std::endl;
 
-		check_is_integral<char>();
 		check_is_integral<int>();
-		check_is_integral<long>();
-		check_is_integral<long long>();
-		check_is_integral<float>();
-		check_is_integral<double>();
-		check_is_integral<unsigned char>();
-		check_is_integral<unsigned int>();
-		check_is_integral<unsigned long>();
-		check_is_integral<unsigned long long>();
 
 		std::cout << std::endl << " is_integral " << chrono << std::endl;
 	}
@@ -556,16 +547,9 @@ int unit_main(int argc, char** argv)
 
 		check_pair<char, int>();
 		check_pair<int, int>();
-		check_pair<int, char>();
 		check_pair<float, int>();
 		check_pair<float, float>();
-		check_pair<double, char>();
-		check_is_integral<char>();
 		check_is_integral<int>();
-		check_is_integral<long>();
-		check_is_integral<long long>();
-		check_is_integral<float>();
-		check_is_integral<double>();
 		check_enable_if<char>();
 		check_enable_if<int>();
 		check_enable_if<long>();
@@ -581,9 +565,7 @@ int unit_main(int argc, char** argv)
 		check_stack<char>();
 		check_stack<int>();
 		check_stack<long>();
-		check_stack<long long>();
 		check_stack<float>();
-		check_stack<double>();
 		check_map<char, char>();
 		check_map<int, int>();
 		check_map<int, float>();
@@ -592,8 +574,6 @@ int unit_main(int argc, char** argv)
 		check_set<char>();
 		check_set<int>();
 		check_set<long>();
-		check_set<long long>();
-		check_set<float>();
 		check_set<double>();
 		check_eq_lexico<char, char>();
 		check_eq_lexico<char, int>();
