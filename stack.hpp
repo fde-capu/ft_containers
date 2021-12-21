@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:52:50 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/12 09:44:08 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/15 03:31:53 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ namespace ft
 				typedef				Sequence					container_type;
 				typedef typename	Sequence::size_type			size_type;
 
-				explicit stack(const Sequence& u = Sequence()) : c(u) { }
+				explicit stack(const Sequence& u = Sequence()) : c(u) {}
 
 				bool empty() const								{ return c.empty();	}
 				size_type size() const							{ return c.size();	}

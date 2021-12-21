@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:38:51 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/14 13:34:31 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/21 14:14:36 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,17 @@ namespace ft
 
 				_alloc_interface(size_t n)
 				{
-					_m_start = _m_allocate(n);
+					_m_start = n ? _m_allocate(n) : 0;
 					_m_finish = _m_start;
 					_m_end_of_storage = _m_start + n;
 				}
 
 				~_alloc_interface() 
-				{ _m_deallocate(_m_start, _m_end_of_storage - _m_start); }
+				{
+					_m_destroy();
+					if (_m_start != _m_end_of_storage)
+						_m_deallocate(_m_start, _m_end_of_storage - _m_start);
+				}
 
 				address	_m_allocate(size_t n)
 				{ return a.allocate(n);	}
@@ -52,7 +56,20 @@ namespace ft
 				{ a.deallocate(p, n); }
 
 				void	_m_free()
-				{ _m_deallocate(_m_start, _m_end_of_storage - _m_start); }
+				{
+					_m_destroy();
+					if (_m_start != _m_end_of_storage)
+						_m_deallocate(_m_start, _m_end_of_storage - _m_start);
+				}
+
+				void	_m_destroy()
+				{
+					if (_m_start == _m_end_of_storage)
+						return ;
+					T* h = _m_start;
+					while (h < _m_end_of_storage)
+						h++->~T();
+				}
 		};
 }
 

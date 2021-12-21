@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/08 11:38:47 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/14 11:17:16 by fde-capu         ###   ########.fr       */
+/*   Created: 2021/12/19 18:55:59 by fde-capu          #+#    #+#             */
+/*   Updated: 2021/12/21 14:13:50 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,21 @@ namespace ft
 		_node*				sibling();
 		_node*				next();
 		_node*				prev();
+		_node* the_only_child();
+		bool has_both_children();
+		bool has_two_black_children();
+		void in_place_of(_node*&);
+		void set_parent(_node*&);
+		_node*& left_bool(bool b);
+		bool has_black_bool(bool b);
+		void set_child_color(bool b, _rbcolor c);
 	};
+
+	void _tree_rot_as(_node* const ref, _node* const pivot, _node*& root);
+	void _tree_rot_not_as(_node* const ref, _node* const pivot, _node*& root);
+	void _tree_rot_l(_node* const pivot, _node*& root);
+	void _tree_rot_r(_node* const pivot, _node*& root);
+	void _tree_rot_bool_l(bool b, _node* const pivot, _node*& root);
 
 	void _tree_rebalance(_node*, _node*&);
 
@@ -70,6 +84,8 @@ namespace ft
 			_tree_iterator(tree_ptr x) : node(x) {}
 
 			_tree_iterator(c_tree_ptr x) : node(const_cast<tree_ptr>(x)) {}
+
+			_tree_iterator(const iterator& it) : node(it.node) {}
 
 			reference operator* () const
 			{ return static_cast<tree_ptr>(node)->value; }
@@ -324,16 +340,16 @@ namespace ft
 
 				tree_ref copy_full(tree_ref dst, c_tree_ref ori)
 				{
-					if (dst == &ori)
-						return *dst;
+					if (dst == ori)
+						return dst;
 					clear();
-					dst->root.color = red;
+					dst.root.color = red;
 					key_compare = ori.key_compare;
-					root_node_ref() = copy(ori.tree_begin(), dst->tree_end());
-					leftmost() = leftmost_child(root_node_ptr());
-					rightmost() = rightmost_child(root_node_ptr());
+					root_node_ref() = copy(ori.tree_begin(), dst.tree_end());
+					leftmost() = const_cast<ft::_node *>(leftmost_child(root_node_ptr()));
+					rightmost() =  const_cast<ft::_node *>(rightmost_child(root_node_ptr()));
 					node_count = ori.node_count;
-					return *dst;
+					return dst;
 				}
 
 			public:
@@ -361,7 +377,7 @@ namespace ft
 				~_tree() { clear(); }
 
 				tree_ref operator= (c_tree_ref x)
-				{ return copy_full(this, x); }
+				{ return copy_full(*this, x); }
 
 				comp key_comp() const
 				{ return key_compare; }
@@ -443,10 +459,11 @@ namespace ft
 					tree_ptr pos = pos_and_piv.first;
 					tree_ptr piv = pos_and_piv.second;
 					iterator piv_it = static_cast<iterator>(piv);
-					bool dir = key_compare(KoV(v), key(piv));
-					if (dir && piv_it == begin()) // left!
+					if (!empty() && KoV(v) == key(piv))
+						return ft::pair<iterator, bool>(piv_it, false); // repeated!
+					if (piv_it == begin()) // left!
 						return ft::pair<iterator, bool>(insert(pos, piv, v), true);
-					if (dir)
+					if (key_compare(KoV(v), key(piv)))
 						--piv_it;
 					if (key_compare(key(piv_it.node), KoV(v)))
 						return ft::pair<iterator, bool>(insert(pos, piv, v), true);
@@ -463,22 +480,126 @@ namespace ft
 					return insert_unique(++first, last);
 				}
 
-				void erase(iterator pos)
+			private:
+				void twist1(_node*& na, _node*& nb, bool dir, _node*& root)
 				{
-					tree foo;
-					iterator s = static_cast<iterator>(begin());
-					iterator e = static_cast<iterator>(end());
-					while (s != e)
+					na->color = black;
+					nb->color = red;
+					_tree_rot_bool_l(dir, nb, root);
+					na = nb->left_bool(!dir);
+				}
+
+				void twist2(_node*& na, _node*& nb, _node*& nc)
+				{
+					na->color = red;
+					nb = nc;
+					nc = nc->parent;
+				}
+
+				void twist3(_node*& na, _node*& nb, bool dir, _node*& root)
+				{
+					na->left_bool(dir)->color = black;
+					na->color = red;
+					_tree_rot_bool_l(!dir, na, root);
+					na = nb->left_bool(!dir);
+				}
+				
+				void twist4(_node*& na, _node*& nb, bool dir, _node*& root)
+				{
+					na->color = nb->color;
+					nb->color = black;
+					na->set_child_color(!dir, black);
+					_tree_rot_bool_l(dir, nb, root);
+				}
+
+				void root_adjust(_node*& na, _node*& nb, _node*& nc)
+				{
+					if (na == nb)
+						nb = nc;
+					else
+						nc->in_place_of(na);
+				}
+
+				void most_adjust(_node*& na, _node*& nb)
+				{
+					if (leftmost() == na)
+						leftmost() = na->right ? nb->leftmost_child(nb) : na->parent;
+					if (rightmost() == na)
+						rightmost() = na->left ? nb->rightmost_child(nb) : na->parent;
+				}
+
+				_node*& triangulate(_node*& x, _node*& y, _node*& del)
+				{
+					if (y == del->right)
+						return y;
+					x->set_parent(y->parent);
+					y->parent->left = x;
+					y->right = del->right;
+					del->right->parent = y;
+					return y->parent;
+				}
+
+				void y_replace(_node*& del, _node*& x, _node*& y, _node*& save_parent, _node*& root)
+				{
+					del->left->parent = y;
+					y->left = del->left;
+					save_parent = triangulate(x, y, del);
+					root_adjust(del, root, y);
+					y->parent = del->parent;
+					ft::swap(y->color, del->color);
+					y = del;
+				}
+
+				void proceed(_node*& del, _node*& x, _node*& y, _node*& save_parent, _node*& root)
+				{
+					save_parent = y->parent;
+					x->set_parent(y->parent);
+					root_adjust(del, root, x);
+					most_adjust(del, x);
+				}
+
+				void erase_loop(_node*& x, _node*& save_parent, _node*& root)
+				{
+					while (x != root && (!x || x->color == black))
 					{
-						if (s == pos)
+						bool go_left = x == save_parent->left;
+						_node* w = save_parent->left_bool(!go_left);
+						if (w->color == red)
+							twist1(w, save_parent, go_left, root);
+						if (w->has_two_black_children())
+							twist2(w, x, save_parent);
+						else
 						{
-							s++;
-							continue ;
+							if (w->has_black_bool(!go_left))
+								twist3(w, save_parent, go_left, root);
+							twist4(w, save_parent, go_left, root);
+							break ;
 						}
-						foo.insert_unique(*s);
-						s++;
 					}
-					swap(foo);
+					x ? x->color = black : 0;
+				}
+
+				_node* rebalance_for_erase(_node*& del, _node& header)
+				{
+					_node*& root = header.parent;
+					_node* y = del->has_both_children() ? del->leftmost_child(del->right) : del;
+					_node* x = y->has_both_children() ? y->right : y->the_only_child();
+					_node* save_parent = 0;
+					if (y != del)
+						y_replace(del, x, y, save_parent, root);
+					else
+						proceed(del, x, y, save_parent, root);
+					if (y->color != red)
+						erase_loop(x, save_parent, root);
+					return y;
+				}
+
+			public:
+				void erase(iterator pos_as_it)
+				{
+					tree_ptr del = static_cast<tree_ptr>(rebalance_for_erase(pos_as_it.node, root));
+					destroy_node(del);
+					--node_count;
 				}
 
 				size_t erase(c_key_ref v)
@@ -492,31 +613,8 @@ namespace ft
 
 				void erase(iterator first, iterator last)
 				{
-					if (first == last)
-						return ;
-					tree foo;
-					iterator s = static_cast<iterator>(begin());
-					iterator e = static_cast<iterator>(end());
-					bool do_not = false;
-					while (s != e)
-					{
-						if (s == last)
-							do_not = false;
-						if (do_not)
-						{
-							s++;
-							continue ;
-						}
-						if (s == first)
-						{
-							do_not = true;
-							s++;
-							continue ;
-						}
-						foo.insert_unique(*s);
-						s++;
-					}
-					swap(foo);
+					while (first != last)
+						erase(first++);
 				}
 
 				void clear() 
