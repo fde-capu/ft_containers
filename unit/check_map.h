@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:57:35 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/13 02:47:35 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/21 20:28:44 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,35 +20,36 @@ void check_map()
 	title(typeid(K).name());
 	title(typeid(V).name());
 	title("Member types");
-	check(1, typeid(typename ft::map<K, V>::key_type).name(), typeid(K).name()); 
-	check(2, typeid(typename ft::map<K, V>::mapped_type).name(), typeid(V).name()); 
-	check(3, typeid(typename ft::map<K, V>::value_type).name(), typeid(ft::pair<const K, V>).name()); 
-	check(4, typeid(typename ft::map<K, V>::key_compare).name(), typeid(std::less<K>).name()); 
-	check(5, typeid(typename ft::map<K, V>::value_compare).name(), typeid(typename ft::map<K, V>::value_compare).name());
-	check(6, typeid(typename ft::map<K, V>::allocator_type).name(), typeid(std::allocator<ft::pair<const K, V> >).name());
-	check(7, typeid(typename ft::map<K, V>::reference).name(), typeid(typename std::allocator<ft::pair<const K, V> >::reference).name());
-	check(8, typeid(typename ft::map<K, V>::const_reference).name(), typeid(typename std::allocator<ft::pair<const K, V> >::const_reference).name());
-	check(9, typeid(typename ft::map<K, V>::pointer).name(), typeid(typename std::allocator<ft::pair<const K, V> >::pointer).name());
-	check(10, typeid(typename ft::map<K, V>::const_pointer).name(), typeid(typename std::allocator<ft::pair<const K, V> >::const_pointer).name());
+	typedef ft::map<K, V> map_type;
+	check(1, typeid(typename map_type::key_type).name(), typeid(K).name()); 
+	check(2, typeid(typename map_type::mapped_type).name(), typeid(V).name()); 
+	check(3, typeid(typename map_type::value_type).name(), typeid(ft::pair<const K, V>).name()); 
+	check(4, typeid(typename map_type::key_compare).name(), typeid(std::less<K>).name()); 
+	check(5, typeid(typename map_type::value_compare).name(), typeid(typename map_type::value_compare).name());
+	check(6, typeid(typename map_type::allocator_type).name(), typeid(std::allocator<ft::pair<const K, V> >).name());
+	check(7, typeid(typename map_type::reference).name(), typeid(typename std::allocator<ft::pair<const K, V> >::reference).name());
+	check(8, typeid(typename map_type::const_reference).name(), typeid(typename std::allocator<ft::pair<const K, V> >::const_reference).name());
+	check(9, typeid(typename map_type::pointer).name(), typeid(typename std::allocator<ft::pair<const K, V> >::pointer).name());
+	check(10, typeid(typename map_type::const_pointer).name(), typeid(typename std::allocator<ft::pair<const K, V> >::const_pointer).name());
 	ft::bidirectional_iterator_tag t_bidir_tag;
 	const ft::bidirectional_iterator_tag c_t_bidir_tag;
-	check(11, typeid(typename ft::iterator_traits<typename ft::map<K, V>::iterator>::iterator_category).name(), typeid(t_bidir_tag).name());
-	check(12, typeid(typename ft::iterator_traits<typename ft::map<K, V>::const_iterator>::iterator_category).name(), typeid(c_t_bidir_tag).name());
-	check(13, typeid(typename ft::iterator_traits<typename ft::map<K, V>::reverse_iterator>::iterator_category).name(), typeid(t_bidir_tag).name());
-	check(14, typeid(typename ft::iterator_traits<typename ft::map<K, V>::const_reverse_iterator>::iterator_category).name(), typeid(c_t_bidir_tag).name());
-	check(15, is_reverse_iterator<typename ft::map<K, V>::reverse_iterator>::value, true);
-	check(16, is_reverse_iterator<typename ft::map<K, V>::const_reverse_iterator>::value, true);
-	check(17, is_reverse_iterator<typename ft::map<K, V>::iterator>::value, false);
-	check(18, is_reverse_iterator<typename ft::map<K, V>::const_iterator>::value, false);
-	check(19, typeid(typename ft::map<K, V>::difference_type).name(), typeid(ptrdiff_t).name());
-	check(20, typeid(typename ft::map<K, V>::size_type).name(), typeid(size_t).name());
+	check(11, typeid(typename ft::iterator_traits<typename map_type::iterator>::iterator_category).name(), typeid(t_bidir_tag).name());
+	check(12, typeid(typename ft::iterator_traits<typename map_type::const_iterator>::iterator_category).name(), typeid(c_t_bidir_tag).name());
+	check(13, typeid(typename ft::iterator_traits<typename map_type::reverse_iterator>::iterator_category).name(), typeid(t_bidir_tag).name());
+	check(14, typeid(typename ft::iterator_traits<typename map_type::const_reverse_iterator>::iterator_category).name(), typeid(c_t_bidir_tag).name());
+	check(15, is_reverse_iterator<typename map_type::reverse_iterator>::value, true);
+	check(16, is_reverse_iterator<typename map_type::const_reverse_iterator>::value, true);
+	check(17, is_reverse_iterator<typename map_type::iterator>::value, false);
+	check(18, is_reverse_iterator<typename map_type::const_iterator>::value, false);
+	check(19, typeid(typename map_type::difference_type).name(), typeid(ptrdiff_t).name());
+	check(20, typeid(typename map_type::size_type).name(), typeid(size_t).name());
 	
 	title("Constructors");
-	check(1, typeid(ft::map<K, V>).name(), typeid(ft::map<K, V>).name());
+	check(1, typeid(map_type).name(), typeid(map_type).name());
 	check(2, typeid(ft::map<K, V, std::less<K> >).name(), typeid(ft::map<K, V, std::less<K> >).name());
 	check(3, typeid(ft::map<K, V, std::less<K>, std::allocator<ft::pair<const K, V> > >).name(), typeid(ft::map<K, V, std::less<K>, std::allocator<ft::pair<const K, V> > >).name());
 
-	ft::map<K, V> mm;
+	map_type mm;
 	/*            ^*/
 
 	mm[K(7)] = V(742);
@@ -56,16 +57,16 @@ void check_map()
 	mm[K(9)] = V(942);
 	mm[K(6)] = V(642);
 
-	check(4, ft::map<K, V>(mm.find(K(8)), mm.end())[K(8)], mm[K(8)]);
-	check(5, ft::map<K, V>(mm.find(K(8)), mm.end())[K(7)], V(0));
-	check(6, (*ft::map<K, V>(mm.find(K(8)), mm.end()).begin()).second, V(842));
-	check(6, (*(++ft::map<K, V>(mm.find(K(8)), mm.end()).begin())).second, V(942));
-	check(7, (*(--ft::map<K, V>(mm.begin(), mm.end()).end())).second, V(942));
-	check(8, (*(--ft::map<K, V>(mm.begin(), --mm.end()).end())).second, V(842));
-	check(9, ft::map<K, V>(mm.begin(), mm.end(), std::less<K>())[K(7)], V(742));
-	check(10, ft::map<K, V>(mm.begin(), mm.end(), std::less<K>(), std::allocator<ft::pair<K, V> >())[K(7)], V(742));
-	check(11, ft::map<K, V>(mm)[K(8)], V(842));
-	ft::map<K, V> mm_cp = mm;
+	check(4, map_type(mm.find(K(8)), mm.end())[K(8)], mm[K(8)]);
+	check(5, map_type(mm.find(K(8)), mm.end())[K(7)], V(0));
+	check(6, (*map_type(mm.find(K(8)), mm.end()).begin()).second, V(842));
+	check(6, (*(++map_type(mm.find(K(8)), mm.end()).begin())).second, V(942));
+	check(7, (*(--map_type(mm.begin(), mm.end()).end())).second, V(942));
+	check(8, (*(--map_type(mm.begin(), --mm.end()).end())).second, V(842));
+	check(9, map_type(mm.begin(), mm.end(), std::less<K>())[K(7)], V(742));
+	check(10, map_type(mm.begin(), mm.end(), std::less<K>(), std::allocator<ft::pair<K, V> >())[K(7)], V(742));
+	check(11, map_type(mm)[K(8)], V(842));
+	map_type mm_cp = mm;
 	check(12, mm_cp[K(8)], mm[K(8)]);
 
 	title("Iterators");
@@ -73,29 +74,29 @@ void check_map()
 	check(2, (*--mm.end()).first, K(9));
 	check(3, (*mm.rbegin()).first, K(9));
 	check(4, (*--mm.rend()).first, K(6));
-	typename ft::map<K, V>::iterator i = mm.begin();
+	typename map_type::iterator i = mm.begin();
 	check(5, (*i).first, K(6));
 	check(6, (*++i).first, K(7));
 	(*i).second = V(74242);
 	check(7, (*i).second, V(74242));
-	typename ft::map<K, V>::const_iterator ci = mm.begin();
+	typename map_type::const_iterator ci = mm.begin();
 	check(8, (*ci).first, K(6));
-	typename ft::map<K, V>::reverse_iterator ri = mm.rbegin();
+	typename map_type::reverse_iterator ri = mm.rbegin();
 	check(9, (*ri).first, K(9));
 	check(10, (*++ri).first, K(8));
 	(*ri).second = V(84242);
 	check(11, (*ri).second, V(84242));
-	typename ft::map<K, V>::const_reverse_iterator cri = mm.rbegin();
+	typename map_type::const_reverse_iterator cri = mm.rbegin();
 	check(12, (*cri).first, K(9));
 
 	title("Capacity");
 	check(1, mm.empty(), false);
-	check(2, ft::map<K, V>().empty(), true);
-	check(3, mm.size(), static_cast<typename ft::map<K, V>::size_type>(4));
-	check(4, mm_cp.size(), static_cast<typename ft::map<K, V>::size_type>(4));
+	check(2, map_type().empty(), true);
+	check(3, mm.size(), static_cast<typename map_type::size_type>(4));
+	check(4, mm_cp.size(), static_cast<typename map_type::size_type>(4));
 	mm_cp[K(5)] = V(542);
-	check(5, mm_cp.size(), static_cast<typename ft::map<K, V>::size_type>(5));
-	check(6, ft::map<K, V>().size(), static_cast<typename ft::map<K, V>::size_type>(0));
+	check(5, mm_cp.size(), static_cast<typename map_type::size_type>(5));
+	check(6, map_type().size(), static_cast<typename map_type::size_type>(0));
 	check(7, mm.max_size(), size_t(-1), NOT_EQUAL); // system dependent
 
 	title("Elements");
@@ -106,63 +107,63 @@ void check_map()
 	title("Modifiers");
 	{
 		title("insert (1)");
-		ft::pair<typename ft::map<K, V>::iterator, bool> new_el = mm.insert(ft::pair<K, V>(K(99), V(999)));
+		ft::pair<typename map_type::iterator, bool> new_el = mm.insert(ft::pair<K, V>(K(99), V(999)));
 		check(1, (*new_el.first).first, K(99));
 		check(2, (*new_el.first).second, V(999));
 		check(3, new_el.second, true);
 		check(4, mm[K(98)], V(0));
-		check(5, mm.size(), static_cast<typename ft::map<K, V>::size_type>(6));
-		ft::pair<typename ft::map<K, V>::iterator, bool> not_new = mm.insert(ft::pair<K, V>(K(8), V(888)));
+		check(5, mm.size(), static_cast<typename map_type::size_type>(6));
+		ft::pair<typename map_type::iterator, bool> not_new = mm.insert(ft::pair<K, V>(K(8), V(888)));
 		check(6, (*not_new.first).first, K(8));
 		check(7, (*not_new.first).second, V(888), NOT_EQUAL);
 		check(8, not_new.second, false);
 		check(9, mm[K(8)], V(888), NOT_EQUAL);
-		check(10, mm.size(), static_cast<typename ft::map<K, V>::size_type>(6));
+		check(10, mm.size(), static_cast<typename map_type::size_type>(6));
 	}
 	{
 		title("insert (2)");
-		typename ft::map<K, V>::iterator new_el = mm.insert(++mm.begin(), ft::pair<K, V>(K(88), V(888)));
+		typename map_type::iterator new_el = mm.insert(++mm.begin(), ft::pair<K, V>(K(88), V(888)));
 		check(1, (*new_el).first, K(88));
 		check(2, (*new_el).second, V(888));
 		check(3, mm[K(88)], V(888));
-		check(4, mm.size(), static_cast<typename ft::map<K, V>::size_type>(7));
-		typename ft::map<K, V>::iterator not_new = mm.insert(++mm.begin(), ft::pair<K, V>(K(8), V(888)));
+		check(4, mm.size(), static_cast<typename map_type::size_type>(7));
+		typename map_type::iterator not_new = mm.insert(++mm.begin(), ft::pair<K, V>(K(8), V(888)));
 		check(6, (*not_new).first, K(8));
 		check(7, (*not_new).second, V(888), NOT_EQUAL);
 		check(8, mm[K(8)], V(888), NOT_EQUAL);
-		check(9, mm.size(), static_cast<typename ft::map<K, V>::size_type>(7));
+		check(9, mm.size(), static_cast<typename map_type::size_type>(7));
 		title("insert (3)");
 		mm_cp.insert(mm.begin(), --mm.end());
 		check(1, mm_cp[K(88)], V(888));
-		check(2, mm_cp.size(), static_cast<typename ft::map<K, V>::size_type>(7));
+		check(2, mm_cp.size(), static_cast<typename map_type::size_type>(7));
 		check(3, mm_cp[K(99)], V(999), NOT_EQUAL);
 		check(4, mm_cp[K(99)], V());
 		mm_cp.insert(mm.begin(), mm.end());
-		check(5, mm_cp.size(), static_cast<typename ft::map<K, V>::size_type>(8));
+		check(5, mm_cp.size(), static_cast<typename map_type::size_type>(8));
 		mm_cp.insert(mm.begin(), mm.end());
-		check(6, mm_cp.size(), static_cast<typename ft::map<K, V>::size_type>(8));
+		check(6, mm_cp.size(), static_cast<typename map_type::size_type>(8));
 	}
 	title("erase (1)");
 	mm.insert(ft::pair<K, V>(K(5), V(15))); // (preparation)
 	mm.insert(ft::pair<K, V>(K(4), V(14))); // ...
 	check(1, (*mm.begin()).first, K(4));
 	check(2, (*mm.begin()).second, V(14));
-	check(3, mm.size(), static_cast<typename ft::map<K, V>::size_type>(9));
+	check(3, mm.size(), static_cast<typename map_type::size_type>(9));
 	check(4, (*++mm.begin()).first, K(5));
 	check(5, (*++mm.begin()).second, V(15));
 	{
 		mm.erase(++mm.begin());
 		check(6, (*++mm.begin()).first, K(5), NOT_EQUAL);
 		check(7, (*++mm.begin()).second, V(15), NOT_EQUAL);
-		check(8, mm.size(), static_cast<typename ft::map<K, V>::size_type>(8));
+		check(8, mm.size(), static_cast<typename map_type::size_type>(8));
 		mm.erase(mm.begin());
 		check(9, (*mm.begin()).first, K(6));
 		check(10, (*mm.begin()).second, V(642));
-		check(11, mm.size(), static_cast<typename ft::map<K, V>::size_type>(7));
+		check(11, mm.size(), static_cast<typename map_type::size_type>(7));
 		mm.erase(--mm.end());
 		check(12, (*--mm.end()).first, K(99), NOT_EQUAL);
 		check(13, (*--mm.end()).second, V(999), NOT_EQUAL);
-		check(14, mm.size(), static_cast<typename ft::map<K, V>::size_type>(6));
+		check(14, mm.size(), static_cast<typename map_type::size_type>(6));
 	}
 	mm.insert(ft::pair<K, V>(K(1), V(11))); // ...
 	mm.insert(ft::pair<K, V>(K(2), V(12))); // ...
@@ -176,28 +177,28 @@ void check_map()
 	mm.insert(ft::pair<K, V>(K(104), V(1004))); // ...
 	{
 		title("erase (2)");
-		check(1, mm.size(), static_cast<typename ft::map<K, V>::size_type>(16));
-		typename ft::map<K, V>::size_type pop_size = mm.erase(K(1));
-		check(2, mm.size(), static_cast<typename ft::map<K, V>::size_type>(15));
-		check(3, pop_size, static_cast<typename ft::map<K, V>::size_type>(1));
+		check(1, mm.size(), static_cast<typename map_type::size_type>(16));
+		typename map_type::size_type pop_size = mm.erase(K(1));
+		check(2, mm.size(), static_cast<typename map_type::size_type>(15));
+		check(3, pop_size, static_cast<typename map_type::size_type>(1));
 		check(4, (*mm.begin()).first, K(1), NOT_EQUAL);
 		check(5, (*mm.begin()).second, V(11), NOT_EQUAL);
 
 		pop_size = mm.erase(K(3));
-		check(6, pop_size, static_cast<typename ft::map<K, V>::size_type>(1));
-		check(7, mm.size(), static_cast<typename ft::map<K, V>::size_type>(14));
+		check(6, pop_size, static_cast<typename map_type::size_type>(1));
+		check(7, mm.size(), static_cast<typename map_type::size_type>(14));
 		check(8, (*++mm.begin()).first, K(3), NOT_EQUAL);
 		check(9, (*++mm.begin()).second, V(13), NOT_EQUAL);
 
 		pop_size = mm.erase(K(103));
-		check(10, pop_size, static_cast<typename ft::map<K, V>::size_type>(1));
-		check(11, mm.size(), static_cast<typename ft::map<K, V>::size_type>(13));
+		check(10, pop_size, static_cast<typename map_type::size_type>(1));
+		check(11, mm.size(), static_cast<typename map_type::size_type>(13));
 		check(12, (*----mm.end()).first, K(103), NOT_EQUAL);
 		check(13, (*----mm.end()).second, V(1003), NOT_EQUAL);
 
 		pop_size = mm.erase(K(104));
-		check(14, pop_size, static_cast<typename ft::map<K, V>::size_type>(1));
-		check(15, mm.size(), static_cast<typename ft::map<K, V>::size_type>(12));
+		check(14, pop_size, static_cast<typename map_type::size_type>(1));
+		check(15, mm.size(), static_cast<typename map_type::size_type>(12));
 		check(16, (*--mm.end()).first, K(104), NOT_EQUAL);
 		check(17, (*--mm.end()).second, V(1004), NOT_EQUAL);
 
@@ -207,7 +208,7 @@ void check_map()
 		check(21, mm[K(3)], V(13), NOT_EQUAL);
 		check(22, mm[K(103)], V(1003), NOT_EQUAL);
 		check(23, mm[K(104)], V(1004), NOT_EQUAL);
-		check(24, mm.size(), static_cast<typename ft::map<K, V>::size_type>(16));
+		check(24, mm.size(), static_cast<typename map_type::size_type>(16));
 		mm.insert(ft::pair<K, V>(K(2), V(12))); // ...
 		check(25, (*mm.begin()).second, V(12), NOT_EQUAL);
 		check(26, (*mm.begin()).second, V(0));
@@ -237,124 +238,124 @@ void check_map()
 	title("erase (3)");
 	{
 		{
-			ft::map<K, V> cc(mm);
+			map_type cc(mm);
 			cc.erase(--cc.begin(), --cc.begin());	// 01 // ** [a  , b  , c  , d  ]
-			check(1, cc.size(), static_cast<typename ft::map<K, V>::size_type>(16));
+			check(1, cc.size(), static_cast<typename map_type::size_type>(16));
 			check(2, (*cc.begin()).first, K(1));
 			check(3, (*--cc.end()).first, K(104));
 		}
 		{
-			ft::map<K, V> cc(mm);
+			map_type cc(mm);
 			cc.erase(--cc.begin(), cc.end());	// 06 // *  [a  , b  , c  , d  ] *
-			check(4, cc.size(), static_cast<typename ft::map<K, V>::size_type>(16));
+			check(4, cc.size(), static_cast<typename map_type::size_type>(16));
 			check(5, (*cc.begin()).first, K(1));
 			check(6, (*--cc.end()).first, K(104));
 		}
 		{
-			ft::map<K, V> cc(mm);
+			map_type cc(mm);
 			cc.erase(cc.begin(), cc.begin());	// 07 //    [a**, b  , c  , d  ]
-			check(7, cc.size(), static_cast<typename ft::map<K, V>::size_type>(16));
+			check(7, cc.size(), static_cast<typename map_type::size_type>(16));
 			check(8, (*cc.begin()).first, K(1));
 			check(9, (*--cc.end()).first, K(104));
 		}
 		{
-			ft::map<K, V> cc(mm);
+			map_type cc(mm);
 			cc.erase(cc.begin(), ++cc.begin());	// 08 //    [a* , b* , c  , d  ]
-			check(10, cc.size(), static_cast<typename ft::map<K, V>::size_type>(15));
+			check(10, cc.size(), static_cast<typename map_type::size_type>(15));
 			check(11, (*cc.begin()).first, K(2));
 			check(12, (*--cc.end()).first, K(104));
 		}
 		{
-			ft::map<K, V> cc(mm);
+			map_type cc(mm);
 			cc.erase(cc.begin(), ----cc.end());	// 09 //    [a* , b  , c* , d  ]
-			check(13, cc.size(), static_cast<typename ft::map<K, V>::size_type>(2));
+			check(13, cc.size(), static_cast<typename map_type::size_type>(2));
 			check(14, (*cc.begin()).first, K(103));
 			check(15, (*--cc.end()).first, K(104));
 		}
 		{
-			ft::map<K, V> cc(mm);
+			map_type cc(mm);
 			cc.erase(cc.begin(), --cc.end());	// 10 //    [a* , b  , c  , d* ]
-			check(16, cc.size(), static_cast<typename ft::map<K, V>::size_type>(1));
+			check(16, cc.size(), static_cast<typename map_type::size_type>(1));
 			check(17, (*cc.begin()).first, K(104));
 			check(18, (*--cc.end()).first, K(104));
 		}
 		{
-			ft::map<K, V> cc(mm);
+			map_type cc(mm);
 			cc.erase(cc.begin(), cc.end());	// 11 //    [a* , b  , c  , d  ] *
-			check(19, cc.size(), static_cast<typename ft::map<K, V>::size_type>(0));
+			check(19, cc.size(), static_cast<typename map_type::size_type>(0));
 			check(20, cc.empty(), true);
 		}
 		{
-			ft::map<K, V> cc(mm);
+			map_type cc(mm);
 			cc.erase(++cc.begin(), ++cc.begin()); // 12 //    [a  , b**, c  , d  ]
-			check(21, cc.size(), static_cast<typename ft::map<K, V>::size_type>(16));
+			check(21, cc.size(), static_cast<typename map_type::size_type>(16));
 			check(22, (*cc.begin()).first, K(1));
 			check(23, (*--cc.end()).first, K(104));
 		}
 		{
-			ft::map<K, V> cc(mm);
+			map_type cc(mm);
 			cc.erase(++cc.begin(), ----cc.end());	// 13 //    [a  , b* , c* , d  ]
-			check(24, cc.size(), static_cast<typename ft::map<K, V>::size_type>(3));
+			check(24, cc.size(), static_cast<typename map_type::size_type>(3));
 			check(25, (*cc.begin()).first, K(1));
 			check(26, (*++cc.begin()).first, K(103));
 			check(27, (*--cc.end()).first, K(104));
 			check(28, (*----cc.end()).first, K(103));
 		}
 		{
-			ft::map<K, V> cc(mm);
+			map_type cc(mm);
 			cc.erase(++cc.begin(), --cc.end());	// 14 //    [a  , b* , c  , d* ]
-			check(29, cc.size(), static_cast<typename ft::map<K, V>::size_type>(2));
+			check(29, cc.size(), static_cast<typename map_type::size_type>(2));
 			check(30, (*cc.begin()).first, K(1));
 			check(31, (*++cc.begin()).first, K(104));
 			check(32, (*--cc.end()).first, K(104));
 			check(33, (*----cc.end()).first, K(1));
 		}
 		{
-			ft::map<K, V> cc(mm);
+			map_type cc(mm);
 			cc.erase(++cc.begin(), cc.end());	// 15 //    [a  , b* , c  , d  ] *
-			check(34, cc.size(), static_cast<typename ft::map<K, V>::size_type>(1));
+			check(34, cc.size(), static_cast<typename map_type::size_type>(1));
 			check(35, (*cc.begin()).first, K(1));
 		}
 		{
-			ft::map<K, V> cc(mm);
+			map_type cc(mm);
 			cc.erase(----cc.end(), ----cc.end());	// 16 //    [a  , b  , c**, d  ]
-			check(36, cc.size(), static_cast<typename ft::map<K, V>::size_type>(16));
+			check(36, cc.size(), static_cast<typename map_type::size_type>(16));
 			check(37, (*cc.begin()).first, K(1));
 			check(38, (*--cc.end()).first, K(104));
 		}
 		{
-			ft::map<K, V> cc(mm);
+			map_type cc(mm);
 			cc.erase(----cc.end(), --cc.end());	// 17 //    [a  , b  , c* , d* ]
-			check(39, cc.size(), static_cast<typename ft::map<K, V>::size_type>(15));
+			check(39, cc.size(), static_cast<typename map_type::size_type>(15));
 			check(40, (*cc.begin()).first, K(1));
 			check(41, (*--cc.end()).first, K(104));
 			check(42, (*----cc.end()).first, K(102));
 		}
 		{
-			ft::map<K, V> cc(mm);
+			map_type cc(mm);
 			cc.erase(----cc.end(), cc.end());	// 18 //    [a  , b  , c* , d  ] *
-			check(43, cc.size(), static_cast<typename ft::map<K, V>::size_type>(14));
+			check(43, cc.size(), static_cast<typename map_type::size_type>(14));
 			check(44, (*cc.begin()).first, K(1));
 			check(45, (*--cc.end()).first, K(102));
 		}
 		{
-			ft::map<K, V> cc(mm);
+			map_type cc(mm);
 			cc.erase(--cc.end(), --cc.end());	// 19 //    [a  , b  , c  , d**]
-			check(46, cc.size(), static_cast<typename ft::map<K, V>::size_type>(16));
+			check(46, cc.size(), static_cast<typename map_type::size_type>(16));
 			check(47, (*cc.begin()).first, K(1));
 			check(48, (*--cc.end()).first, K(104));
 		}
 		{
-			ft::map<K, V> cc(mm);
+			map_type cc(mm);
 			cc.erase(--cc.end(), cc.end());	// 20 //    [a  , b  , c  , d* ] *
-			check(49, cc.size(), static_cast<typename ft::map<K, V>::size_type>(15));
+			check(49, cc.size(), static_cast<typename map_type::size_type>(15));
 			check(50, (*cc.begin()).first, K(1));
 			check(51, (*--cc.end()).first, K(103));
 		}
 		{
-			ft::map<K, V> cc(mm);
+			map_type cc(mm);
 			cc.erase(cc.end(), cc.end());	// 21 //    [a  , b  , c  , d  ] **
-			check(52, cc.size(), static_cast<typename ft::map<K, V>::size_type>(16));
+			check(52, cc.size(), static_cast<typename map_type::size_type>(16));
 			check(53, (*cc.begin()).first, K(1));
 			check(54, (*--cc.end()).first, K(104));
 		}
@@ -362,8 +363,8 @@ void check_map()
 
 	title("swap\t");
 	{
-		ft::map<K, V> ma;
-		ft::map<K, V> mb;
+		map_type ma;
+		map_type mb;
 
 		ma[K(1)] = V(11);
 		ma[K(3)] = V(22);
@@ -376,37 +377,37 @@ void check_map()
 		check(2, (*--ma.end()).second, V(2222));
 		check(3, (*mb.begin()).second, V(11));
 		check(4, (*--mb.end()).second, V(33));
-		check(5, ma.size(), static_cast<typename ft::map<K, V>::size_type>(2));
-		check(6, mb.size(), static_cast<typename ft::map<K, V>::size_type>(3));
+		check(5, ma.size(), static_cast<typename map_type::size_type>(2));
+		check(6, mb.size(), static_cast<typename map_type::size_type>(3));
 
-		ft::map<K, V> mempty;
+		map_type mempty;
 		ma.swap(mempty);
-		check(7, ma.size(), static_cast<typename ft::map<K, V>::size_type>(0));
+		check(7, ma.size(), static_cast<typename map_type::size_type>(0));
 		ma.swap(mb);
-		check(8, mb.size(), static_cast<typename ft::map<K, V>::size_type>(0));
-		check(9, ma.size(), static_cast<typename ft::map<K, V>::size_type>(3));
+		check(8, mb.size(), static_cast<typename map_type::size_type>(0));
+		check(9, ma.size(), static_cast<typename map_type::size_type>(3));
 		check(10, (*ma.begin()).second, V(11));
 	}
 
 	title("clear\t");
 	{
-		ft::map<K, V> ma;
+		map_type ma;
 		ma[K(1)] = V(11);
 		ma[K(2)] = V(22);
 		ma[K(3)] = V(33);
 		ma[K(111)] = V(1111);
 		ma[K(222)] = V(2222);
-		check(1, ma.size(), static_cast<typename ft::map<K, V>::size_type>(5));
+		check(1, ma.size(), static_cast<typename map_type::size_type>(5));
 		ma.clear();
-		check(2, ma.size(), static_cast<typename ft::map<K, V>::size_type>(0));
+		check(2, ma.size(), static_cast<typename map_type::size_type>(0));
 		ma.clear();
-		check(3, ma.size(), static_cast<typename ft::map<K, V>::size_type>(0));
+		check(3, ma.size(), static_cast<typename map_type::size_type>(0));
 	}
 
 	title("Observers");
 	title("key_comp");
 	{
-		ft::map<K, V> ma;
+		map_type ma;
 
 		K x = K();
 		ma[K(x + 1)] = V(11);
@@ -416,7 +417,7 @@ void check_map()
 		ma[K(x + 7)] = V(127);
 		ma[K(x + 8)] = V(6);
 
-		typename ft::map<K, V>::key_compare kc = ma.key_comp();
+		typename map_type::key_compare kc = ma.key_comp();
 
 		check(1, kc(ma[K(x + 1)], ma[K(x + 2)]), true);
 		check(2, kc(ma[K(x + 2)], ma[K(x + 3)]), true);
@@ -432,7 +433,7 @@ void check_map()
 	}
 	title("value_comp");
 	{
-		ft::map<K, V> ma;
+		map_type ma;
 		ma[K(111)] = V(1111);
 		ma[K(2)] = V(22);
 		ma[K(3333)] = V(6);
@@ -447,7 +448,7 @@ void check_map()
 	}
 	title("(more)\t");
 	{
-		ft::map<K, V> ma;
+		map_type ma;
 		ma[K(1)] = V(11);
 		ma[K(2)] = V(22);
 		ma[K(3)] = V(33);
@@ -455,12 +456,12 @@ void check_map()
 		ma[K(112)] = V(112);
 		ma[K(160)] = V(160);
 
-		typename ft::map<K, V>::key_compare k = ma.key_comp();
+		typename map_type::key_compare k = ma.key_comp();
 		check(1, k(K(1), K(2)), true);
 		check(2, k(K(2), K(1)), false);
 		check(3, k(K(1), K(1)), false);
 
-		typename ft::map<K, V>::value_compare v = ma.value_comp();
+		typename map_type::value_compare v = ma.value_comp();
 		check(4, v(ft::pair<K, V>(K(1), V(11)), ft::pair<K, V>(K(2), K(22))), true);
 		check(5, v(ft::pair<K, V>(K(2), V(22)), ft::pair<K, V>(K(1), K(11))), false);
 		check(6, v(ft::pair<K, V>(K(1), V(11)), ft::pair<K, V>(K(1), K(11))), false);
@@ -469,7 +470,7 @@ void check_map()
 	title("Operations");
 	title("find\t");
 	{
-		ft::map<K, V> ma;
+		map_type ma;
 		ma[K(1)] = V(11);
 		ma[K(2)] = V(22);
 		ma[K(3)] = V(33);
@@ -480,13 +481,13 @@ void check_map()
 		check(2, (*++ma.find(K(2))).second, V(33));
 		check(3, (*--ma.find(K(2))).second, V(11));
 		check(4, (*ma.find(K(3333))).second, V(6));
-		check(5, ma.size(), static_cast<typename ft::map<K, V>::size_type>(6));
+		check(5, ma.size(), static_cast<typename map_type::size_type>(6));
 		check(6, ma.find(K(4242)) == ma.end(), true);
-		check(7, ma.size(), static_cast<typename ft::map<K, V>::size_type>(6));
+		check(7, ma.size(), static_cast<typename map_type::size_type>(6));
 	}
 	title("count\t");
 	{
-		ft::map<K, V> ma;
+		map_type ma;
 		ma[K(1)] = V(11);
 		ma[K(2)] = V(22);
 		ma[K(3)] = V(33);
@@ -505,7 +506,7 @@ void check_map()
 	}
 	title("lower_bound");
 	{
-		ft::map<K, V> ma;
+		map_type ma;
 		ma[K(1)] = V(11);
 		ma[K(2)] = V(22);
 		ma[K(3)] = V(33);
@@ -526,7 +527,7 @@ void check_map()
 	}
 	title("upper_bound");
 	{
-		ft::map<K, V> ma;
+		map_type ma;
 		ma[K(1)] = V(11);
 		ma[K(2)] = V(22);
 		ma[K(3)] = V(33);
@@ -548,7 +549,7 @@ void check_map()
 	}
 	title("equal_range");
 	{
-		ft::map<K, V> ma;
+		map_type ma;
 		ma[K(1)] = V(11);
 		ma[K(2)] = V(22);
 		ma[K(3)] = V(33);
@@ -570,7 +571,7 @@ void check_map()
 	}
 	title("Allocator");
 	{
-		ft::map<K, V> ma;
+		map_type ma;
 		ma[K(1)] = V(11);
 		ma[K(2)] = V(22);
 		ma[K(3)] = V(33);
@@ -595,7 +596,7 @@ void check_map()
 	}
 	title("Operators");
 	{
-		ft::map<K, V> ma;
+		map_type ma;
 		ma[K(1)] = V(11);
 		ma[K(2)] = V(22);
 		ma[K(3)] = V(33);
@@ -603,13 +604,13 @@ void check_map()
 		ma[K(112)] = V(112);
 		ma[K(160)] = V(160);
 
-		ft::map<K, V> mb;
+		map_type mb;
 		mb[K(7)] = V(77);
 		mb[K(8)] = V(88);
 		mb[K(9)] = V(99);
 		mb[K(190)] = V(0);
 
-		ft::map<K, V> mc;
+		map_type mc;
 		mc[K(10)] = V(10);
 		mc[K(11)] = V(11);
 		mc[K(12)] = V(12);

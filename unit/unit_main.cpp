@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 12:52:08 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/21 17:08:50 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/21 20:44:56 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,7 +206,7 @@ int unit_main(int argc, char** argv)
 
 	if (SECTION & _MAP_A_)
 	{
-		std::cout << std::endl << "[ map ]" << std::endl;
+		std::cout << std::endl << "[ map a ]" << std::endl;
 		std::cout << chrono.start() << std::endl;
 
 		check_map<char, char>();
@@ -214,35 +214,29 @@ int unit_main(int argc, char** argv)
 		check_map<char, float>();
 		check_map<char, double>();
 		check_map<char, unsigned char>();
-		check_map<char, unsigned int>();
 
 		check_map<int, char>();
 		check_map<int, int>();
 		check_map<int, float>();
 		check_map<int, double>();
-		check_map<int, unsigned char>();
 		check_map<int, unsigned int>();
 
 		check_map<float, char>();
 		check_map<float, int>();
 		check_map<float, float>();
 		check_map<float, double>();
-		check_map<float, unsigned char>();
-		check_map<float, unsigned int>();
 
 		check_map<double, char>();
 		check_map<double, int>();
 		check_map<double, float>();
 		check_map<double, double>();
-		check_map<double, unsigned char>();
-		check_map<double, unsigned int>();
 
-		std::cout << std::endl << " map " << chrono << std::endl;
+		std::cout << std::endl << " map a " << chrono << std::endl;
 	}
 
 	if (SECTION & _MAP_B_)
 	{
-		std::cout << std::endl << "[ map ]" << std::endl;
+		std::cout << std::endl << "[ map b ]" << std::endl;
 		std::cout << chrono.start() << std::endl;
 
 		check_map<unsigned char, char>();
@@ -259,40 +253,12 @@ int unit_main(int argc, char** argv)
 		check_map<unsigned int, unsigned char>();
 		check_map<unsigned int, unsigned int>();
 
-		check_map<unsigned long, char>();
-		check_map<unsigned long, int>();
-		check_map<unsigned long, float>();
-		check_map<unsigned long, double>();
-		check_map<unsigned long, unsigned char>();
-		check_map<unsigned long, unsigned int>();
-
-		std::cout << std::endl << " map " << chrono << std::endl;
+		std::cout << std::endl << " map b " << chrono << std::endl;
 	}
 
 	if (SECTION & _MAP_C_)
 	{
-		std::cout << std::endl << "[ map ]" << std::endl;
-		std::cout << chrono.start() << std::endl;
-
-		check_map<char, long>();
-		check_map<char, unsigned long>();
-		check_map<int, long>();
-		check_map<int, unsigned long>();
-		check_map<long, char>();
-		check_map<long, int>();
-		check_map<long, long>();
-		check_map<long, float>();
-		check_map<long, double>();
-		check_map<long, unsigned char>();
-		check_map<long, unsigned int>();
-		check_map<long, unsigned long>();
-
-		std::cout << std::endl << " map " << chrono << std::endl;
-	}
-
-	if (SECTION & _MAP_D_)
-	{
-		std::cout << std::endl << "[ map ]" << std::endl;
+		std::cout << std::endl << "[ map c ]" << std::endl;
 		std::cout << chrono.start() << std::endl;
 
 		check_map<float, long>();
@@ -301,12 +267,9 @@ int unit_main(int argc, char** argv)
 		check_map<double, unsigned long>();
 		check_map<unsigned char, long>();
 		check_map<unsigned int, long>();
-		check_map<unsigned long, long>();
 		check_map<unsigned char, unsigned long>();
-		check_map<unsigned int, unsigned long>();
-		check_map<unsigned long, unsigned long>();
 
-		std::cout << std::endl << " map " << chrono << std::endl;
+		std::cout << std::endl << " map c " << chrono << std::endl;
 	}
 
 	if (SECTION & _SET_)
@@ -406,6 +369,14 @@ int unit_main(int argc, char** argv)
 		check_eq_lexico<float, double>();
 
 		std::cout << std::endl << " general testing " << chrono << std::endl;
+	}
+
+	if (SECTION & _STRESS_)
+	{
+		std::cout << std::endl << "[ stress ]" << std::endl;
+		std::cout << chrono.start() << std::endl;
+		check_stress();
+		std::cout << std::endl << " stress " << chrono << std::endl;
 	}
 
 	std::cout << std::endl;

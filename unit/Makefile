@@ -6,7 +6,7 @@
 #    By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/08 12:00:02 by fde-capu          #+#    #+#              #
-#    Updated: 2021/12/13 17:44:01 by fde-capu         ###   ########.fr        #
+#    Updated: 2021/12/21 20:51:36 by fde-capu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRCS	=	Chronometer.cpp
 all:	unit
 unit:
 	@cp ../Makefile ../unit_Makefile
-	@sed -i -e "s/[[:alnum:]|\/|_]*main.cp*/unit\/unit_main.cpp unit\/Chronometer.cpp/g" ../unit_Makefile
+	@sed -i -e "s/[[:alnum:]|\/|_]*main.cp*/unit\/unit_main.cpp unit\/Chronometer.cpp unit\/check_stress.cpp/g" ../unit_Makefile
 	@cd .. && \
 		make -f ./unit_Makefile && \
 		make -f ./unit_Makefile stl && \

@@ -16,12 +16,13 @@ _EQ_LEXICO_   /
 _VECTOR_ \ These two together:
 _STACK_  / _VECSTACK_
 
-_MAP_A_ \
-_MAP_B_ | Can be run individually
-_MAP_C_ | (due to memory limitation).
-_MAP_D_ / Or _MAP_ for all.
+_MAP_A_ \ Can be run individually
+_MAP_B_ | (due to memory limitation).
+_MAP_C_ / Or _MAP_ for all.
 
 _SET_ 
+
+_STRESS_ | Single routine to compare timings.
 
 _ALL_ | Intended to run all at once, VM kills clang++ error 317 (out of memory).
 
