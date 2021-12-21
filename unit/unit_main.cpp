@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 12:52:08 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/21 20:44:56 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/21 21:36:55 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -374,9 +374,8 @@ int unit_main(int argc, char** argv)
 	if (SECTION & _STRESS_)
 	{
 		std::cout << std::endl << "[ stress ]" << std::endl;
-		std::cout << chrono.start() << std::endl;
 		check_stress();
-		std::cout << std::endl << " stress " << chrono << std::endl;
+		std::cout << std::endl << " stress " << std::endl;
 	}
 
 	std::cout << std::endl;
