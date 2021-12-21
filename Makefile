@@ -5,136 +5,111 @@
 #                                                     +:+ +:+         +:+      #
 #    By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/12/19 18:57:33 by fde-capu          #+#    #+#              #
-#    Updated: 2021/12/19 20:03:22 by fde-capu         ###   ########.fr        #
+#    Created: 2021/12/08 11:41:00 by fde-capu          #+#    #+#              #
+#    Updated: 2021/12/14 09:52:43 by fde-capu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ft_containers
-NAME_STD = std_containers
+NAME	=	ft_containers
+NAMESTL	=	stl_containers
+SEED	=	42
+check	=	'_VECTOR_'
 
-CC = clang++
-CCFLAGS = -Wall -Werror -Wextra -g -std=c++98 -pedantic -fsanitize=address
+SRCS	=	\
+			src/ft_tree.cpp main.cpp \
+			unit/unit_main.cpp \
+			unit/Chronometer.cpp unit/ft_main.cpp
 
-SRC_DIR = ./tests
-OBJ_DIR = ./build
-FT_OBJ_DIR = ${OBJ_DIR}/ft
-STD_OBJ_DIR = ${OBJ_DIR}/std
-
-INC_DIR = ./bits
-
-INCLUDES = ${INC_DIR}/ft_algobase.h \
-			${INC_DIR}/ft_iterator_base_funcs.h \
-			${INC_DIR}/ft_iterator_base_types.h \
-			${INC_DIR}/ft_iterator.h \
-			${INC_DIR}/ft_pair.h \
-			${INC_DIR}/ft_tree.h \
-			${INC_DIR}/ft_utility.h \
-			${INC_DIR}/type_traits.h \
-			map.hpp \
+HEAD	=	Makefile \
 			stack.hpp \
 			vector.hpp \
-			set.hpp
+			map.hpp \
+			set.hpp \
+			bits/ft_pair.h \
+			bits/ft_tree.h \
+			bits/ft_iterator_base_types.h \
+			bits/type_traits.h \
+			bits/ft_utility.h \
+			bits/ft_iterator_base_funcs.h \
+			bits/ft_iterator.h \
+			bits/ft_algobase.h \
+			unit/check_vector.h unit/check_iterator.h \
+			unit/check_pair.h unit/check_is_integral.h \
+			unit/check_enable_if.h unit/check_helpers.h \
+			unit/check_stack.h unit/check_map.h \
+			unit/check_set.h unit/check_eq_lexico.h \
+			unit/unit_main.h unit/Chronometer.hpp
 
-SRCS = ${SRC_DIR}/main.cpp \
-			${SRC_DIR}/ft_tree.cpp \
-			${SRC_DIR}/Tester.cpp \
-			${SRC_DIR}/utilities/test_utilities.cpp \
-			${SRC_DIR}/utilities/test_reverseiterator.cpp \
-			${SRC_DIR}/vector/vector_constructors.cpp \
-			${SRC_DIR}/vector/vector_capacity.cpp \
-			${SRC_DIR}/vector/vector_iterators.cpp \
-			${SRC_DIR}/vector/vector_elementaccess.cpp \
-			${SRC_DIR}/vector/vector_modifiers.cpp \
-			${SRC_DIR}/vector/vector_overloads.cpp \
-			${SRC_DIR}/vector/vector_tests.cpp \
-			${SRC_DIR}/vector/vector_largetests.cpp \
-			${SRC_DIR}/map/map_tests.cpp \
-			${SRC_DIR}/map/map_constructors.cpp \
-			${SRC_DIR}/map/map_iterators.cpp \
-			${SRC_DIR}/map/map_modifiers.cpp \
-			${SRC_DIR}/map/map_capacity.cpp \
-			${SRC_DIR}/map/map_overloads.cpp \
-			${SRC_DIR}/map/map_operations.cpp \
-			${SRC_DIR}/map/map_observers.cpp \
-			${SRC_DIR}/map/map_elementaccess.cpp \
-			${SRC_DIR}/map/map_largetests.cpp \
-			${SRC_DIR}/set/set_tests.cpp \
-			${SRC_DIR}/set/set_constructors.cpp \
-			${SRC_DIR}/set/set_iterators.cpp \
-			${SRC_DIR}/set/set_modifiers.cpp \
-			${SRC_DIR}/set/set_capacity.cpp \
-			${SRC_DIR}/set/set_overloads.cpp \
-			${SRC_DIR}/set/set_operations.cpp \
-			${SRC_DIR}/set/set_observers.cpp \
-			${SRC_DIR}/set/set_largetests.cpp \
-			${SRC_DIR}/stack/stack_tests.cpp \
-			${SRC_DIR}/stack/stack_functions.cpp \
-			${SRC_DIR}/stack/stack_modifiers.cpp \
-			${SRC_DIR}/stack/stack_overloads.cpp
+SHELL	=	/bin/sh
+CCFLAGS	=	-Wall -Werror -Wextra -g
+CC98	=	clang++ $(CCFLAGS) -std=c++98 -DSECTION=$(check)
+CC11	=	clang++ $(CCFLAGS) -DSECTION=$(check)
+OBJS	=	$(SRCS:.cpp=.o)
+OBJSSTL	=	$(SRCS:.cpp=.o_stl)
+VAL		=	valgrind
+VALFLAG	=	--tool=memcheck \
+			--leak-check=full \
+			--show-leak-kinds=all \
+			--track-origins=yes \
+			--show-reachable=yes
+DIFFWID =	200
+LINE	=	@echo "\n\n***************************************************\n\n";
 
+all:		$(NAME) $(NAMESTL)
 
-FT_OBJS = $(patsubst ${SRC_DIR}/%.cpp, ${FT_OBJ_DIR}/%.o, ${SRCS})
-FT_DEPENDS = $(patsubst %.o, %.d, ${FT_OBJS})
-STD_OBJS = $(patsubst ${SRC_DIR}/%.cpp, ${STD_OBJ_DIR}/%.o, ${SRCS})
-STD_DEPENDS = $(patsubst %.o, %.d, ${STD_OBJS})
+ft:			$(NAME)
+$(NAME):	$(OBJS)
+	$(LINE)
+	$(CC98) $(OBJS) -o $(NAME)
+$(OBJS):	%.o : %.cpp $(HEAD)
+	$(LINE)
+	$(CC98) -o $@ -c $<
 
-
-all: title ${NAME} ${NAME_STD}
-
-${NAME}: ${FT_OBJS} ${INCLUDES}
-	@${CC} ${CCFLAGS} ${FT_OBJS} -DORIGINAL_STD=0 -I. -I ${INC_DIR} -o ${NAME}
-	@echo "\033[92m./ft_containers is built. \033[0m"
-
-${NAME_STD}: ${STD_OBJS} ${INCLUDES}
-	@${CC} ${CCFLAGS} ${STD_OBJS} -DORIGINAL_STD=1 -I. -I ${INC_DIR} -o ${NAME_STD}
-	@echo "\033[92m./std_containers is built. \033[0m"
-
-${FT_OBJ_DIR}/%.o: ${SRC_DIR}/%.cpp ${INC_DIR} ${INCLUDES}
-	@mkdir -p $(dir $@)
-	@echo -n "."
-	@${CC} ${CCFLAGS} -MMD -c  $< -DORIGINAL_STD=0 -I. -I ${INC_DIR} -o $@
-
-${STD_OBJ_DIR}/%.o: ${SRC_DIR}/%.cpp ${INC_DIR} ${INCLUDES}
-	@mkdir -p $(dir $@)
-	@echo -n "."
-	@${CC}  ${CCFLAGS} -MMD -c $< -DORIGINAL_STD=1 -I. -I ${INC_DIR} -o $@
+stl:		$(NAMESTL)
+$(NAMESTL):	$(OBJSSTL)
+	$(LINE)
+	$(CC11) $(OBJSSTL) -o $(NAMESTL)
+$(OBJSSTL):	%.o_stl : %.cpp $(HEAD)
+	$(LINE)
+	$(CC11) -o $@ -c $<
 
 clean:
-	@rm -rf ${OBJ_DIR}
+	-rm -f $(OBJS)
+	-rm -f $(OBJSSTL)
+	-rm -f timings_*
+	-rm -f *.o
+fclean:		clean
+	-rm -f $(NAME)
+	-rm -f $(NAMESTL)
+re:			fclean all
 
-fclean: clean
-	@rm -rf ./${NAME}
-	@rm -rf ./${NAME_STD}
+ftt:		ft
+	@echo "\n::::::";
+	@echo "::::::::::::: FT";
+	@echo ":::::::::::::::::::::::::::::::::::::::::::";
+	./$(NAME) $(SEED)
+ftv:		ft
+	$(VAL) ./$(NAME) $(SEED)
+ftvf:		ft
+	$(VAL) $(VALFLAG) ./$(NAME) $(SEED)
 
-re: fclean all
+stlt:		stl
+	@echo "\n::::::";
+	@echo "::::::::::::: STL";
+	@echo ":::::::::::::::::::::::::::::::::::::::::::";
+	./$(NAMESTL) $(SEED)
+stlv:		stl
+	$(VAL) ./$(NAMESTL) $(SEED)
+stlvf:		stl
+	$(VAL) $(VALFLAG) ./$(NAMESTL) $(SEED)
 
-test: compare diff time
+t:			stl ft stlt ftt
+rt:			re t
 
-LARGE_TESTS = 1000000
-
-compare: all
-	./ft_containers compare all ${LARGE_TESTS}
-
-diff: all
-	@echo "\033[92mDifference between std:: and ft:: tests: \033[0m"
-	@/bin/bash -c "diff <(./ft_containers) <(./std_containers)" || true
-
-FORMAT = "%e elapsed. %U user. %S system. %P CPU."
-time: all
-	@echo "\033[92mTime difference between std:: and ft:: tests: \033[0m"
-	@echo "\033[93m./ft_containers \033[0m"
-	@time -f ${FORMAT} ./ft_containers all ${LARGE_TESTS} > /dev/null
-	@echo "\033[93m./std_containers \033[0m"
-	@time -f ${FORMAT} ./std_containers all ${LARGE_TESTS} > /dev/null
-
-time_mac: all
-	@echo "\033[92mTime difference between std:: and ft:: tests: \033[0m"
-	@echo "\033[93m./ft_containers \033[0m"
-	@/bin/bash -c "time ./ft_containers all ${LARGE_TESTS} > /dev/null"
-	@echo "\033[93m./std_containers \033[0m"
-	@/bin/bash -c "time ./std_containers all ${LARGE_TESTS} > /dev/null"
-	
-title:
-
--include $(STD_DEPENDS) $(FT_DEPENDS)
+diff:		all
+	@-rm -f timings_*
+	@./$(NAMESTL) $(SEED) >> timings_stl.txt
+	@./$(NAME) $(SEED) >> timings_ft.txt
+	@-diff -y --suppress-common-lines -W $(DIFFWID) timings_stl.txt timings_ft.txt
+	@echo "(diff is supposed to return error in case of difference)";
+d:			diff

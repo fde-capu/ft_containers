@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 18:55:59 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/21 00:03:20 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/21 00:09:21 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ namespace ft
 		_node*				sibling();
 		_node*				next();
 		_node*				prev();
-		_node* the_only_child();
-		bool has_both_children();
-		bool has_two_black_children();
-		void in_place_of(_node*&);
-		void set_parent(_node*&);
-		_node*& left_bool(bool b);
-		bool has_black_bool(bool b);
-		void set_child_color(bool b, _rbcolor c);
+		_node*				the_only_child();
+		bool				has_both_children();
+		bool				has_two_black_children();
+		void				in_place_of(_node*&);
+		void				set_parent(_node*&);
+		_node*&				left_bool(bool b);
+		bool				has_black_bool(bool b);
+		void				set_child_color(bool b, _rbcolor c);
 	};
 
 	void _tree_rot_as(_node* const ref, _node* const pivot, _node*& root);
