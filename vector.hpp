@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 23:05:51 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/21 14:23:20 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/21 20:17:49 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,8 +184,7 @@ namespace ft
 					else
 					{
 						size_t complement = new_size - size();
-						// expand(new_size); // clang++ v.13; vector(10).resize(500) == 640;
-						reserve(new_size); // clang++ v.12 (42 Workspaces); ^... == 500;
+						expand(new_size);
 						this->_m_finish = _fill_n( \
 							this->_m_finish, complement, x);
 					}
@@ -279,10 +278,7 @@ namespace ft
 
 				void insert(iterator pos, size_type n, const value_type& x)
 				{
-					if (n == 1)
-						expand_update(size() + n, pos);
-					else
-						expand_raw(size() + n, pos);
+					expand_update(size() + n, pos);
 					splitopen_for_insert(pos, n);
 					_fill_n(pos.base(), n, x);
 				}
@@ -292,7 +288,7 @@ namespace ft
 					insert(iterator pos, In o_s, In o_e)
 					{
 						size_type n = ft::distance(o_s, o_e);
-						expand_raw(n + size(), pos);
+						expand_update(size() + n, pos);
 						splitopen_for_insert(pos, n);
 						_copy(o_s, o_e, pos);
 					}

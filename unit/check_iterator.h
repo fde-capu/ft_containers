@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:57:18 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/14 11:15:46 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/21 16:58:58 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void check_iterator()
 	{
 		ft::iterator<T, T, size_t, T*> specs_it;
 		static_cast<void>(specs_it);
-		ft::iterator<int, long long, char, unsigned char*> strange_it;
+		ft::iterator<int, long, char, unsigned char*> strange_it;
 		static_cast<void>(strange_it);
 		check(2, 1, 1);
 	}
@@ -94,7 +94,7 @@ void check_iterator()
 	{
 		ft::iterator<T, T> specs_it;
 		static_cast<void>(specs_it);
-		ft::iterator<long long, double*> strange_it;
+		ft::iterator<long, double*> strange_it;
 		static_cast<void>(strange_it);
 		check(4, 1, 1);
 	}

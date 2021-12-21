@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:56:12 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/08 11:56:12 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/21 16:38:27 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,11 @@ void check_enable_if()
 		check(4, is_odd_integral(0), false);
 		check(5, is_odd_integral(1), true);
 		check(6, is_odd_integral(2), false);
-		unsigned long long ll = 42;
-		for (int i = 0; i < 62; i++) { ll *= 42; };
-		check(7, is_odd_integral(ll), false);
-		ll++;
-		check(8, is_odd_integral(ll), true);
+		unsigned long l = 42;
+		for (int i = 0; i < 62; i++) { l *= 42; };
+		check(7, is_odd_integral(l), false);
+		l++;
+		check(8, is_odd_integral(l), true);
 		double d = 42.42;
 		check(9, is_odd_integral(d), false);
 		d = 41.00;

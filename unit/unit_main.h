@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 12:52:21 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/14 11:54:35 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/21 20:09:42 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 
 # include "Chronometer.hpp"
 
-# define UNIT_COLUMNS 10
+# define UNIT_COLUMNS 8
 # define NOT_EQUAL false
 
 static size_t g_test_ok;
@@ -67,13 +67,12 @@ unsigned char random_char();
 # define _MAP_B_		(1 << 10)
 # define _MAP_C_		(1 << 11)
 # define _MAP_D_		(1 << 12)
-# define _MAP_E_		(1 << 13)
 # define _GENERAL_		(1 << 14)
 
-# define _MAP_ _MAP_A_ + _MAP_B_ + _MAP_C_ + _MAP_D_ + _MAP_E_
+# define _MAP_ _MAP_A_ + _MAP_B_ + _MAP_C_ + _MAP_D_
 # define _ALL_ _FT_ + _PAIR_ + _IS_INTEGRAL_ + _ENABLE_IF_ + _ITERATOR_ + _VECTOR_ + _STACK_ + _MAP_ + _SET_ + _EQ_LEXICO_
 # define _SIMPLE_ _FT_ + _GENERAL_
-# define _EXTRAS_ _FT_ + _PAIR_ + _IS_INTEGRAL_ + _ENABLE_IF_ + _ITERATOR_ + _EQ_LEXICO_
+# define _EXTRAS_ _PAIR_ + _IS_INTEGRAL_ + _ENABLE_IF_ + _ITERATOR_ + _EQ_LEXICO_
 # define _VECSTACK_ _VECTOR_ + _STACK_
 
 # ifndef SECTION

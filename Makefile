@@ -6,14 +6,14 @@
 #    By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/08 11:41:00 by fde-capu          #+#    #+#              #
-#    Updated: 2021/12/21 15:25:05 by fde-capu         ###   ########.fr        #
+#    Updated: 2021/12/21 16:41:27 by fde-capu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	ft_containers
 NAMESTL	=	stl_containers
 SEED	=	42
-check	=	'_SIMPLE_'
+check	=	'_GENERAL_'
 
 SRCS	=	\
 			src/ft_tree.cpp main.cpp \
@@ -52,7 +52,7 @@ VALFLAG	=	--tool=memcheck \
 			--show-leak-kinds=all \
 			--track-origins=yes \
 			--show-reachable=yes
-DIFFWID =	200
+DIFFWID =	120
 LINE	=	@echo "\n\n***************************************************\n\n";
 
 all:		$(NAME) $(NAMESTL)

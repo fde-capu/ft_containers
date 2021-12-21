@@ -5,10 +5,9 @@ make [check='option + option...'] [command]
 options:
 
 _GENERAL_ | Less extensive check of everything to fit memory.
-_SIMPLE_  | = _FT_ + _GENERAL_ <- default
+_SIMPLE_  | = _FT_ + _GENERAL_
 
-_FT_          \
-_PAIR_        |
+_PAIR_        \
 _IS_INTEGRAL_ | All these together:
 _ENABLE_IF_   | _EXTRAS_
 _ITERATOR_    |
@@ -20,8 +19,7 @@ _STACK_  / _VECSTACK_
 _MAP_A_ \
 _MAP_B_ | Can be run individually
 _MAP_C_ | (due to memory limitation).
-_MAP_D_ | Or _MAP_ for all.
-_MAP_E_ /
+_MAP_D_ / Or _MAP_ for all.
 
 _SET_ 
 

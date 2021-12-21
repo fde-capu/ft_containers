@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:57:01 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/08 13:48:55 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/21 16:36:42 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,18 @@ void check_is_integral()
 		check(7, ft::is_integral<unsigned int>::value, true);
 		check(8, ft::is_integral<long>::value, true);
 		check(9, ft::is_integral<unsigned long>::value, true);
-		check(10, ft::is_integral<long long>::value, true);
-		check(11, ft::is_integral<unsigned long long>::value, true);
-		check(12, ft::is_integral<IntType>::value, true);
-		check(13, ft::is_integral<DoubleType>::value, false);
-		check(14, integral_tester(true), true);
-		check(15, integral_tester(false), true);
-		check(16, integral_tester(123l), true);
-		check(17, ft::is_integral<std::string>::value, false);
-		check(18, ft::is_integral<float>::value, false);
-		check(19, ft::is_integral<double>::value, false);
-		check(20, ft::is_integral<DoubleType>::value, false);
-		check(21, integral_tester(123.456), false);
-		check(22, integral_tester(123.4567f), false);
-		check(23, integral_tester("Don't Panic"), false);
+		check(10, ft::is_integral<IntType>::value, true);
+		check(11, ft::is_integral<DoubleType>::value, false);
+		check(12, integral_tester(true), true);
+		check(13, integral_tester(false), true);
+		check(14, integral_tester(123l), true);
+		check(15, ft::is_integral<std::string>::value, false);
+		check(16, ft::is_integral<float>::value, false);
+		check(17, ft::is_integral<double>::value, false);
+		check(18, ft::is_integral<DoubleType>::value, false);
+		check(19, integral_tester(123.456), false);
+		check(20, integral_tester(123.4567f), false);
+		check(21, integral_tester("Don't Panic"), false);
 	}
 }
 
