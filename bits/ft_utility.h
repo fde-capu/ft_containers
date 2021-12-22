@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:38:51 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/22 12:23:38 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/22 12:44:19 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,18 @@ namespace ft
 
 				void	_m_destroy()
 				{
-					if (_m_start == _m_end_of_storage)
+//					if (_m_start == _m_end_of_storage)
+					if (!_m_capacity())
 						return ;
 					T* h = _m_start;
 					while (h < _m_end_of_storage)
 						h++->~T();
 				}
+
+				size_t	_m_capacity() const
+				{ return size_t(
+					&dynamic_cast<void*>(_m_end_of_storage) -
+					&dynamic_cast<void*>(_m_start)); }
 		};
 }
 

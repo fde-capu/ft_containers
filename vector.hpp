@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 23:05:51 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/22 12:11:50 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/22 12:37:44 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,11 @@ namespace ft
 				template<typename X, typename Y>
 					X _copy(Y o_h, Y o_e, X& pos)
 					{
-						X p = pos;
-						while (o_h != o_e)
-							*(p++) = *(o_h++);
-						return p;
+//						X p = pos;
+//						while (o_h != o_e)
+//							*(p++) = *(o_h++);
+//						return p;
+						return std::uninitialized_copy(o_h, o_e, pos);
 					}
 
 			public:
