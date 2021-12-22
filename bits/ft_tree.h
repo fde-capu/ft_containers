@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 18:55:59 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/21 14:59:50 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/22 22:18:16 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ namespace ft
 		_node*				sibling();
 		_node*				next();
 		_node*				prev();
-		_node* the_only_child();
-		bool has_both_children();
-		bool has_two_black_children();
-		void in_place_of(_node*&);
-		void set_parent(_node*&);
-		_node*& left_bool(bool b);
-		bool has_black_bool(bool b);
-		void set_child_color(bool b, _rbcolor c);
+		_node*				the_only_child();
+		bool				has_both_children();
+		bool				has_two_black_children();
+		void				in_place_of(_node*&);
+		void				set_parent(_node*&);
+		_node*&				left_bool(bool b);
+		bool				has_black_bool(bool b);
+		void				set_child_color(bool b, _rbcolor c);
 	};
 
 	void _tree_rot_as(_node* const ref, _node* const pivot, _node*& root);
@@ -57,7 +57,6 @@ namespace ft
 	void _tree_rot_l(_node* const pivot, _node*& root);
 	void _tree_rot_r(_node* const pivot, _node*& root);
 	void _tree_rot_bool_l(bool b, _node* const pivot, _node*& root);
-
 	void _tree_rebalance(_node*, _node*&);
 
 	template<typename V>
@@ -227,15 +226,15 @@ namespace ft
 					return iterator(in);
 				}
 
-				tree_ptr copy(c_tree_ptr x, tree_ptr dst)
+				tree_ptr copy(c_tree_ptr ori, tree_ptr par)
 				{
-					tree_ptr y = clone_node(x);
-					y->parent = dst;
-					if (x->right)
-						y->right = copy(right(x), y);
-					if (x->left)
-						y->left = copy(left(x), y);
-					return y;
+					tree_ptr ret = clone_node(ori);
+					ret->parent = par;
+					if (ori->right)
+						ret->right = copy(right(ori), ret);
+					if (ori->left)
+						ret->left = copy(left(ori), ret);
+					return ret;
 				}
 
 				void erase(tree_ptr x)
@@ -278,7 +277,7 @@ namespace ft
 				{ return root.parent; }
 
 				tree_ptr	clone_node(c_tree_ptr x)
-				{ return new_node(x->value, x->color); }
+				{ return x ? new_node(x->value, x->color) : 0; }
 
 				void		destroy_node(tree_ptr x)
 				{ this->del_node(x); }
@@ -340,7 +339,7 @@ namespace ft
 				{
 					if (dst == ori)
 						return dst;
-					clear();
+					dst.clear();
 					dst.root.color = red;
 					key_compare = ori.key_compare;
 					root_node_ref() = copy(ori.tree_begin(), dst.tree_end());
@@ -617,6 +616,8 @@ namespace ft
 
 				void clear() 
 				{
+					if (empty())
+						return ;
 					erase(tree_begin());
 					leftmost() = tree_end();
 					rightmost() = tree_end();

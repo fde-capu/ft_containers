@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:51:47 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/21 00:05:55 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/22 21:04:03 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 namespace ft
 {
 	_node* _node::leftmost_child(_node* x)
-	{ return x->left == 0 ? x : leftmost_child(x->left); }
+	{ return x ? x->left == 0 ? x : leftmost_child(x->left) : 0; }
 
 	const _node* _node::leftmost_child(const _node* x)
-	{ return x->left == 0 ? x : leftmost_child(x->left); }
+	{ return x ? x->left == 0 ? x : leftmost_child(x->left): 0; }
 
 	_node* _node::rightmost_child(_node* x)
-	{ return x->right == 0 ? x : rightmost_child(x->right); }
+	{ return x ? x->right == 0 ? x : rightmost_child(x->right) : 0; }
 
 	const _node* _node::rightmost_child(const _node* x)
-	{ return x->right == 0 ? x : rightmost_child(x->right); }
+	{ return x ? x->right == 0 ? x : rightmost_child(x->right) : 0; }
 
 	bool _node::is_right()
 	{ return this->parent->right == this; }
