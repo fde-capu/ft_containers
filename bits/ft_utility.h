@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:38:51 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/21 14:14:36 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/22 12:23:38 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,10 @@ namespace ft
 				}
 
 				~_alloc_interface() 
-				{
-					_m_destroy();
-					if (_m_start != _m_end_of_storage)
-						_m_deallocate(_m_start, _m_end_of_storage - _m_start);
-				}
+				{ _m_free(); }
 
 				address	_m_allocate(size_t n)
-				{ return a.allocate(n);	}
+				{ return a.allocate(n); }
 
 				void	_m_deallocate(address p, size_t n)
 				{ a.deallocate(p, n); }
