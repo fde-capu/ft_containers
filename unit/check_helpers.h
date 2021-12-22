@@ -6,13 +6,14 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:56:40 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/14 12:11:05 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/22 20:06:48 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CHECK_HELPERS_H
 # define CHECK_HELPERS_H
 
+# include <cstdlib>
 # include "unit_main.h"
 
 /* ostreams so the tests do not break */
@@ -132,7 +133,7 @@ ft::vector<T> rnd_vec(size_t n)
 {
 	ft::vector<T> vv;
 	for (size_t i = 0; i < n; i++)
-		vv.push_back(random_int(-42, 42));
+		vv.push_back(rand());
 	return vv;
 }
 

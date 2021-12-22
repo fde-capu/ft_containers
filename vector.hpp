@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 23:05:51 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/22 12:37:44 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/22 20:18:35 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,20 +100,20 @@ namespace ft
 
 				pointer _fill_n(pointer h, size_t n, const T& v)
 				{
-					while (n--)
-						*h++ = T(v);
-					return h;
+					return std::uninitialized_fill_n(h, n, v);
 				}
 
 				template<typename X, typename Y>
 					X _copy(Y o_h, Y o_e, X& pos)
 					{
-//						X p = pos;
-//						while (o_h != o_e)
-//							*(p++) = *(o_h++);
-//						return p;
 						return std::uninitialized_copy(o_h, o_e, pos);
 					}
+
+
+				void	_m_destroy()
+				{
+					std::_Destroy(this->_m_start, this->_m_finish);
+				}
 
 			public:
 
@@ -137,6 +137,7 @@ namespace ft
 					: _base(ft::distance(o_s, o_e))
 					{
 						this->_m_finish = _copy(o_s, o_e, this->_m_start);
+						this->_m_end_of_storage = this->_m_finish;
 						static_cast<void>(foo);
 						static_cast<void>(type_sample);
 					}
@@ -145,16 +146,31 @@ namespace ft
 				: _base(x.size())
 				{ this->_m_finish = _copy(x.begin(), x.end(), this->_m_start); }
 
-				~vector() {}
+				~vector() { _m_destroy(); }
 
 				vector& operator= (const vector& rhs)
 				{
 					if (this == &rhs)
 						return *this;
-					this->_m_free();
-					this->_m_start = this->_m_allocate(rhs.size());
-					this->_m_finish = _copy(rhs.begin(), rhs.end(), this->_m_start);
-					this->_m_end_of_storage = this->_m_start + rhs.size();
+					size_type new_size = rhs.size();
+					if (new_size > capacity())
+					{
+						pointer new_start = this->_m_allocate(new_size);
+						_m_destroy();
+						this->_m_free();
+						this->_m_start = new_start;
+						this->_m_end_of_storage = new_start + new_size;
+					}
+					else if (size() >= new_size)
+					{
+						iterator i = std::copy(rhs.begin(), rhs.end(), begin());
+						std::_Destroy(i, end());
+					}
+					else
+					{
+						std::copy(rhs.begin(), rhs.end(), begin());
+					}
+					this->_m_finish = this->_m_start + new_size;
 					return *this;
 				}
 
@@ -203,10 +219,12 @@ namespace ft
 					if (new_size > max_size())
 						throw std::length_error("Too lengthy.");
 					pointer new_m_start = this->_m_allocate(new_size);
-					this->_m_finish = _copy( \
+					pointer new_m_finish = _copy( \
 						this->_m_start, this->_m_finish, new_m_start);
+					_m_destroy();
 					this->_m_free();
 					this->_m_start = new_m_start;
+					this->_m_finish = new_m_finish;
 					this->_m_end_of_storage = this->_m_start + new_size;
 				}
 
@@ -241,7 +259,7 @@ namespace ft
 				void assign(size_type n, const value_type& val) 
 				{
 					size_t new_cap = n > capacity() ? n : capacity();
-					this->expand(new_cap);
+					expand(new_cap);
 					this->_m_finish = _fill_n( \
 						this->_m_start, n, val);
 					this->_m_end_of_storage = this->_m_start + new_cap;
@@ -264,7 +282,7 @@ namespace ft
 				void push_back(const value_type& x)
 				{
 					expand(size() + 1);
-					*(this->_m_finish++) = x;
+					std::_Construct(this->_m_finish++, x);
 				}
 
 				void pop_back()
@@ -319,15 +337,15 @@ namespace ft
 
 				void swap(vector& rhs)
 				{
-					pointer _FOO_start = this->_m_start;
-					pointer _FOO_finish = this->_m_finish;
-					pointer _FOO_end_of_storage = this->_m_end_of_storage;
+					pointer _foo_start = this->_m_start;
+					pointer _foo_finish = this->_m_finish;
+					pointer _foo_end_of_storage = this->_m_end_of_storage;
 					this->_m_start = rhs._m_start;
 					this->_m_finish = rhs._m_finish;
 					this->_m_end_of_storage = rhs._m_end_of_storage;
-					rhs._m_start = _FOO_start;
-					rhs._m_finish = _FOO_finish;
-					rhs._m_end_of_storage = _FOO_end_of_storage;
+					rhs._m_start = _foo_start;
+					rhs._m_finish = _foo_finish;
+					rhs._m_end_of_storage = _foo_end_of_storage;
 				}
 
 				void clear()
