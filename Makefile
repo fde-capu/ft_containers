@@ -6,7 +6,7 @@
 #    By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/08 11:41:00 by fde-capu          #+#    #+#              #
-#    Updated: 2021/12/23 13:13:18 by fde-capu         ###   ########.fr        #
+#    Updated: 2021/12/23 13:51:47 by fde-capu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,20 +95,28 @@ ftt:		ft
 	@echo "::::::::::::: FT";
 	@echo ":::::::::::::::::::::::::::::::::::::::::::";
 	./$(NAME) $(SEED)
-ftv:		ft
-	$(VAL) ./$(NAME) $(SEED)
-ftvf:		ft
-	$(VAL) $(VALFLAG) ./$(NAME) $(SEED)
 
 stlt:		stl
 	@echo "\n::::::";
 	@echo "::::::::::::: STL";
 	@echo ":::::::::::::::::::::::::::::::::::::::::::";
 	./$(NAMESTL) $(SEED)
+
+ifneq ($(check), _LEAKS_)
+ftv:		ft
+	$(VAL) ./$(NAME) $(SEED)
+ftvf:		ft
+	$(VAL) $(VALFLAG) ./$(NAME) $(SEED)
 stlv:		stl
 	$(VAL) ./$(NAMESTL) $(SEED)
 stlvf:		stl
 	$(VAL) $(VALFLAG) ./$(NAMESTL) $(SEED)
+else
+ftv:		ftt
+ftvf:		ftt
+stlv:		stlt
+stlvf:		stlt
+endif
 
 t:			stl ft stlt ftt
 rt:			re t
