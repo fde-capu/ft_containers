@@ -6,7 +6,7 @@
 #    By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/08 11:41:00 by fde-capu          #+#    #+#              #
-#    Updated: 2021/12/21 20:52:25 by fde-capu         ###   ########.fr        #
+#    Updated: 2021/12/23 13:13:18 by fde-capu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRCS	=	\
 			src/ft_tree.cpp main.cpp \
 			unit/unit_main.cpp \
 			unit/check_stress.cpp \
+			unit/check_leaks.cpp \
 			unit/Chronometer.cpp unit/ft_main.cpp
 
 HEAD	=	Makefile \
@@ -42,7 +43,12 @@ HEAD	=	Makefile \
 			unit/unit_main.h unit/Chronometer.hpp
 
 SHELL	=	/bin/sh
-CCFLAGS	=	-Wall -Werror -Wextra -g
+ifeq ($(check), _LEAKS_)
+SANITY	=	-fsanitize=address
+else
+SANITY	=	
+endif
+CCFLAGS	=	-Wall -Werror -Wextra -g $(SANITY)
 CC98	=	clang++ $(CCFLAGS) -std=c++98 -DSECTION=$(check)
 CC11	=	clang++ $(CCFLAGS) -DSECTION=$(check) -DSTL=1
 OBJS	=	$(SRCS:.cpp=.o)

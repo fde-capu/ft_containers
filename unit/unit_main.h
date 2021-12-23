@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 12:52:21 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/21 20:45:41 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/23 12:47:05 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int random_int(int min, int max);
 unsigned char random_char();
 
 void check_stress();
+void check_leaks();
 
 # include "check_helpers.h"
 # include "check_vector.h"
@@ -70,6 +71,7 @@ void check_stress();
 # define _MAP_C_		(1 << 11)
 # define _GENERAL_		(1 << 12)
 # define _STRESS_		(1 << 13)
+# define _LEAKS_		(1 << 14)
 
 # define _MAP_ _MAP_A_ + _MAP_B_ + _MAP_C_
 # define _ALL_ _FT_ + _PAIR_ + _IS_INTEGRAL_ + _ENABLE_IF_ + _ITERATOR_ + _VECTOR_ + _STACK_ + _MAP_ + _SET_ + _EQ_LEXICO_ + _STRESS_

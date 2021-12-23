@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 18:55:59 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/23 12:34:15 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/23 12:55:36 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ namespace ft
 
 				void del_node(tree_ptr p)
 				{
-					p->value.~T();
+					std::_Destroy(&p->value);
 					allocator.deallocate(p, 1);
 				}
 

@@ -23,6 +23,7 @@ _MAP_C_ / Or _MAP_ for all.
 _SET_ 
 
 _STRESS_ | Single routine to compare timings.
+_LEAKS_  | Executes complex tasks with -fsanitize on. Do not run on valgrind.
 
 _ALL_ | Intended to run all at once, VM kills clang++ error 317 (out of memory).
 
