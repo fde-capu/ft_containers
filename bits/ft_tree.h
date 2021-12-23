@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 18:55:59 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/22 22:18:16 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/23 12:34:15 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,10 @@ namespace ft
 				{ return allocator.allocate(1); }
 
 				void del_node(tree_ptr p)
-				{ allocator.deallocate(p, 1); }
+				{
+					p->value.~T();
+					allocator.deallocate(p, 1);
+				}
 
 				void* val_pointer(tree_ptr p)
 				{ return static_cast<void*>(&p->value); }
