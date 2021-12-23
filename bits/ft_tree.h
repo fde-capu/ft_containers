@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 18:55:59 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/23 12:55:36 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/23 16:00:13 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,11 +131,13 @@ namespace ft
 				typename A::template rebind<tree_node<T> >::other	allocator;
 
 				tree_node<T>* alloc_node()
-				{ return allocator.allocate(1); }
+				{
+					return allocator.allocate(1);
+				}
 
 				void del_node(tree_ptr p)
 				{
-					std::_Destroy(&p->value);
+					std::_Destroy(&(*p).value);
 					allocator.deallocate(p, 1);
 				}
 
@@ -247,6 +249,7 @@ namespace ft
 					erase(right(x));
 					erase(left(x));
 					destroy_node(x);
+					--node_count;
 				}
 
 				ft::pair<tree_ptr, tree_ptr>
@@ -426,31 +429,17 @@ namespace ft
 					t.rightmost() = t.tree_end();
 				}
 
-				void copy_pointers(tree_ref dst, c_tree_ref ori)
-				{
-					dst.root_node_ref() = const_cast<node_ptr>(ori.root_node_ptr());
-					dst.leftmost() = const_cast<node_ptr>(ori.leftmost());
-					dst.rightmost() = const_cast<node_ptr>(ori.rightmost());
-					dst.root_node_ref()->parent = dst.tree_end();
-				}
-
 				void swap(tree_ref t)
 				{
 					ft::swap(this->key_compare, t.key_compare);
 					ft::swap(this->node_count, t.node_count);
-					if (root_node_ptr() && t.root_node_ptr())
-					{
-						ft::swap(root_node_ref(), t.root_node_ref());
-						ft::swap(leftmost(), t.leftmost());
-						ft::swap(rightmost(), t.rightmost());
+					ft::swap(root_node_ref(), t.root_node_ref());
+					ft::swap(leftmost(), t.leftmost());
+					ft::swap(rightmost(), t.rightmost());
+					if (root_node_ref())
 						root_node_ref()->parent = tree_end();
+					if (t.root_node_ref())
 						t.root_node_ref()->parent = t.tree_end();
-					}
-					else if (!root_node_ptr() && t.root_node_ptr())
-					{
-						copy_pointers(*this, t);
-						reset_root(t);
-					}
 				}
 
 				ft::pair<iterator, bool> insert_unique(c_val_ref v)

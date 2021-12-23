@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 11:56:40 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/22 20:06:48 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/23 14:44:44 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ struct inv_compare
 };
 
 	template<typename _K, typename _V>
-void show_map(ft::map<_K, _V> mm)
+void show_map(ft::map<_K, _V> &mm)
 {
 	typename ft::map<_K, _V>::iterator it = mm.begin();
 	std::cout << std::endl;

@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 12:52:08 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/23 12:45:10 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/23 18:48:54 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,13 @@ int unit_main(int argc, char** argv)
 		// ft::cout << "This would not compile. There is no cout in namespace ft." << ft::endl;
 #endif
 
-	const int seed = atoi(argv[1]);
+	if (argc != 2)
+	{
+		std::cout << "Use: ft_containers [seed]" << std::endl;
+		std::cout << "Default seed 42 will be used." << std::endl << std::endl;
+	}
+	const int seed = argc == 2 ? atoi(argv[1]) : 42;
+
 	srand(static_cast<unsigned int>(seed));
 	Chronometer chrono;
 

@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 12:41:23 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/23 13:02:09 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/23 16:01:07 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # include "unit_main.h"
 # include <cstdlib> // rand()
 
-# define N 10
-# define C 5
+# define N 30000
+# define C 10
 # define X 5
 # define V 2
 
@@ -41,9 +41,10 @@ void check_leaks()
 		ft::map<int, int> foo = m;
 	} std::cout << V << " map copies" << chrono << std::endl;
 
-	ft::map<int, int> foo;
+	ft::map<int, int> foo(m);
+	ft::map<int, int> dee;
 	std::cout << chrono.start(); for (int i = 0; i < N; i++) {
-		foo.swap(m);
+		foo.swap(dee);
 	} std::cout << N << " map swaps" << chrono << std::endl;
 
 	std::cout << chrono.start(); for (int i = 0; i < N; i++) {
