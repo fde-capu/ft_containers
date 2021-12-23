@@ -6,7 +6,7 @@
 /*   By: fde-capu <fde-capu@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 12:52:21 by fde-capu          #+#    #+#             */
-/*   Updated: 2021/12/23 12:47:05 by fde-capu         ###   ########.fr       */
+/*   Updated: 2021/12/23 18:58:46 by fde-capu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,13 @@ void check_leaks();
 # define _LEAKS_		(1 << 14)
 
 # define _MAP_ _MAP_A_ + _MAP_B_ + _MAP_C_
-# define _ALL_ _FT_ + _PAIR_ + _IS_INTEGRAL_ + _ENABLE_IF_ + _ITERATOR_ + _VECTOR_ + _STACK_ + _MAP_ + _SET_ + _EQ_LEXICO_ + _STRESS_
+# define _ALL_ _FT_ + _PAIR_ + _IS_INTEGRAL_ + _ENABLE_IF_ + _ITERATOR_ + _VECTOR_ + _STACK_ + _MAP_ + _SET_ + _EQ_LEXICO_ + _STRESS_ + _LEAKS_
 # define _SIMPLE_ _FT_ + _GENERAL_
 # define _EXTRAS_ _PAIR_ + _IS_INTEGRAL_ + _ENABLE_IF_ + _ITERATOR_ + _EQ_LEXICO_
 # define _VECSTACK_ _VECTOR_ + _STACK_
 
 # ifndef SECTION
-#  define SECTION _SIMPLE_
+#  define SECTION _GENERAL_
 # endif
 
 #endif
